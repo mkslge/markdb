@@ -10,7 +10,7 @@ TEST(DmTest, DefaultConstructor) {
 
 
 TEST(DmTest, WriteAndRead) {
-    DiskManager dm;
+    DiskManager dm{"/Users/markseeliger/CLionProjects/marksql/Storage/TestDBs/writeandread.db"};
     char in[PAGE_SIZE];
     memcpy(in, "Hello World", sizeof("Hello World"));
 
@@ -21,3 +21,11 @@ TEST(DmTest, WriteAndRead) {
     std::cout << buf << std::endl;
     free(buf);
 }
+
+TEST(DmTest, AllocatePage) {
+    DiskManager dm("/Users/markseeliger/CLionProjects/marksql/Storage/TestDBs/alloc.db");
+    size_t firstAlloc = dm.allocatePage();
+    size_t secondAlloc = dm.allocatePage();
+    EXPECT_EQ(firstAlloc + 1, secondAlloc);
+}
+

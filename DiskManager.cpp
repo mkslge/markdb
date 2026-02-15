@@ -8,6 +8,7 @@
 
 
 DiskManager::DiskManager() : DiskManager(filepath) {
+
 }
 
 
@@ -15,13 +16,19 @@ DiskManager::DiskManager() : DiskManager(filepath) {
 DiskManager::DiskManager(std::string customFilePath) : filepath_(std::move(customFilePath)){
 
     fd_ = open(filepath_.c_str(), O_RDWR | O_CREAT, filePermissionCode);
-
+    //get byte size of file
+    //next pointer set to 1 + (bytes / page_size)
     if (fd_ < 0) {
         perror("open");
         throw std::runtime_error("File opening failed.");
-    }  else {
-        std::cout << "Opened file." << std::endl;
     }
+    off_t fileSize = lseek(fd_, 0, SEEK_END);
+
+    if (fileSize == static_cast<off_t>(-1)) {
+        throw std::runtime_error("File size reading error.");
+    }
+    next_page_id_ = fileSize / PAGE_SIZE;
+
 }
 
 
@@ -56,10 +63,13 @@ char* DiskManager::readPage(int page_id, char* buf) {
         throw std::runtime_error("Error reading page");
     }
 
-
-
     return buf;
 }
+
+size_t DiskManager::allocatePage() {
+    return next_page_id_++;
+}
+
 
 
 

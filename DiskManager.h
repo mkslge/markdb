@@ -22,11 +22,14 @@ class DiskManager {
 private:
     std::string filepath_;
     int fd_;
+    size_t next_page_id_;
 public:
     DiskManager();
     explicit DiskManager(std::string customFilepath);
     char* readPage(int page_id, char* buf);
     void writePage(int page_id, char* buf);
+
+    size_t allocatePage();
 
     static off_t getByteOffset(size_t page_id);
     ~DiskManager();
