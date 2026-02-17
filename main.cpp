@@ -2,8 +2,17 @@
 #include "DiskManager.h"
 int main() {
 
-    DiskManager dm;
+    const char* str1{"Mark"};
+    const char* str2{"Mark"};
 
+    if (str1 == str2) {
+        std::cout << "Same address" << std::endl;
+    } else {
+        std::cout << "Not the same address" << std::endl;
+    }
+
+    char a{'P'};
+    std::cout << &a << std::endl;
 
 
 
