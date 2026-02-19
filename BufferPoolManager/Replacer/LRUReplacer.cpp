@@ -9,14 +9,26 @@ LRUReplacer::LRUReplacer() : dummy_start_(new Node(0)), dummy_end_(new Node(0)){
     dummy_end_->prev_ = dummy_start_;
 }
 
+LRUReplacer::~LRUReplacer() {
+    Node* curr = dummy_start_;
+    while (curr != nullptr) {
+        Node*  next = curr->next_;
+        delete curr;
+        curr = next;
+    }
+}
+
+
 bool LRUReplacer::victim(int* frame_id) {
     if (map_.empty()) {
         return false;
     }
-    Node* lru_frame = dummy_start_->next_()->key_;
+    Node* lru_frame = dummy_start_->next_;
     deleteNode(lru_frame);
+
     map_.erase(lru_frame->key_);
     *frame_id = lru_frame->key_;
+    delete lru_frame;
 
     return true;
 }
@@ -26,6 +38,7 @@ void LRUReplacer::pin(int frame_id) {
         Node* to_remove = map_[frame_id];
         deleteNode(to_remove);
         map_.erase(frame_id);
+        delete to_remove;
     }
 }
 
@@ -34,19 +47,23 @@ void LRUReplacer::unpin(int frame_id) {
         Node* newNode = new Node(frame_id);
         addToBack(newNode);
         map_[frame_id] = newNode;
+    } else {
+        deleteNode(map_[frame_id]);
+        addToBack(map_[frame_id]);
     }
 }
 
-size_t LRUReplacer::size() {
+size_t LRUReplacer::size() const {
     return std::size(map_);
 }
 
 void LRUReplacer::deleteNode(Node *to_delete) {
     to_delete->prev_->next_ = to_delete->next_;
     to_delete->next_->prev_ = to_delete->prev_;
+
 }
 
-void LRUReplacer::addToBack(Node* to_move) {
+void LRUReplacer::addToBack(Node* to_move) const {
 
     dummy_end_->prev_->next_ = to_move;
     to_move->prev_ = dummy_end_->prev_;

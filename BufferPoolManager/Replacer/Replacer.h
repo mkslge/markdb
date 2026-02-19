@@ -1,24 +1,16 @@
-//
-// Created by Mark on 2/19/26.
-//
-
 #ifndef REPLACER_H
 #define REPLACER_H
 
-
+#include <cstddef>
 
 class Replacer {
 public:
+    virtual ~Replacer() = default;
 
-
-    // @out: frame_id to be returned via frame_id
-    virtual bool victim(int* frame_id);
-
-    virtual void pin(int frame_id);
-    virtual void unpin(int frame_id);
-    virtual size_t size() = 0;
+    virtual bool victim(int* frame_id) = 0;
+    virtual void pin(int frame_id) = 0;
+    virtual void unpin(int frame_id) = 0;
+    virtual std::size_t size() const = 0;
 };
 
-
-
-#endif //REPLACER_H
+#endif
