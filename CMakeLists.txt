@@ -30,6 +30,12 @@ add_executable(marksql main.cpp
         Page.h
         DiskManager.cpp
         DiskManager.h
+        BufferPoolManager/BufferPoolManager.cpp
+        BufferPoolManager/BufferPoolManager.h
+        BufferPoolManager/Replacer/Replacer.cpp
+        BufferPoolManager/Replacer/Replacer.h
+        BufferPoolManager/Replacer/LRUReplacer.cpp
+        BufferPoolManager/Replacer/LRUReplacer.h
 )
 
 
