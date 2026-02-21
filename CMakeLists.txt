@@ -38,7 +38,6 @@ add_library(marksql_lib
         BufferPoolManager/BufferPoolManager.cpp
         BufferPoolManager/Replacer/LRUReplacer.cpp
 
-
 )
 
 target_include_directories(marksql_lib PUBLIC ${CMAKE_SOURCE_DIR})
@@ -63,6 +62,9 @@ target_link_libraries(testPage PRIVATE marksql_lib GTest::gtest_main)
 add_executable(testReplacer Tests/ReplacerTests.cpp)
 target_link_libraries(testReplacer PRIVATE marksql_lib GTest::gtest_main)
 
+add_executable(testBPM Tests/BpmTests.cpp)
+target_link_libraries(testBPM PRIVATE marksql_lib GTest::gtest_main)
+
 # ---------------------------
 # GTEST DISCOVERY
 # ---------------------------
@@ -70,3 +72,4 @@ include(GoogleTest)
 gtest_discover_tests(testDM)
 gtest_discover_tests(testPage)
 gtest_discover_tests(testReplacer)
+gtest_discover_tests(testBPM)

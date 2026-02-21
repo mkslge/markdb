@@ -27,7 +27,10 @@ public:
     [[nodiscard]] bool is_dirty() const;
     void set_dirty(bool dirty);
 
-    [[nodiscard]] int get_pin_count();
+    [[nodiscard]] int get_pin_count() const;
+
+    void set_pin_count(int pin_count);
+
     void pin();
     void unpin();
 

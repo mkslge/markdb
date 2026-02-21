@@ -25,8 +25,12 @@ void Page::set_dirty(bool dirty) {
     is_dirty_ = dirty;
 }
 
-int Page::get_pin_count() {
+int Page::get_pin_count() const {
     return pins_;
+}
+
+void Page::set_pin_count(int pin_count) {
+    pins_ = pin_count;
 }
 
 void Page::pin() {
