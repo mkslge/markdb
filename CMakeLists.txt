@@ -47,7 +47,15 @@ target_link_libraries(marksql_lib PUBLIC sanitizers)
 # ---------------------------
 # MAIN EXECUTABLE
 # ---------------------------
-add_executable(marksql main.cpp)
+add_executable(marksql main.cpp
+        Models/RID.h
+        Models/Slot.cpp
+        Models/Slot.h
+        Models/HeapPage.cpp
+        Models/HeapPage.h
+        Models/Tuple.cpp
+        Models/Tuple.h
+        Models/HeapPageHeader.h)
 target_link_libraries(marksql PRIVATE marksql_lib)
 
 # ---------------------------
