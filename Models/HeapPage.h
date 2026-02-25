@@ -6,34 +6,33 @@
 #define HEAPPAGE_H
 
 #include "Slot.h"
-#include "HeapPageHeader.h"
+#include "../Models/HeapPageHeader.h"
+#include "../Models/HeapPage.h"
 #include <optional>
-
+#include <vector>
+#include "Page.h"
+#include<iostream>
 using Tuple = std::vector<char>;
-
-
-std::string example = "|ns: |";
 
 class HeapPage {
 private:
     char* data_;
 
 public:
-    HeapPage();
+    explicit HeapPage(char* data);
     HeapPageHeader* header();
-    int getNumSlots();
+    std::uint16_t getNumSlots();
     void setNumSlots(int num_slots);
-    int getFreeSpace();
+    std::uint16_t getFreeSpace();
 
     std::optional<int> insertTuple(const Tuple& tuple);
-    Tuple getTuple();
-
-    void deleteTuple();
+    Tuple getTuple(std::uint16_t slot_id);
+    void deleteTuple(std::uint16_t slot_id);
 
 
 private:
-    Slot getSlot(int slot_id);
-    void setSlot(int slot_id, Slot slot)
+    Slot* getSlot(std::uint16_t slot_id);
+    void setSlot(std::uint16_t slot_id, const Slot& slot);
 };
 
 

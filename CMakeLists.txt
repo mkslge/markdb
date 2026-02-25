@@ -37,7 +37,7 @@ add_library(marksql_lib
         DiskManager.cpp
         BufferPoolManager/BufferPoolManager.cpp
         BufferPoolManager/Replacer/LRUReplacer.cpp
-
+        Models/HeapPage.cpp
 )
 
 target_include_directories(marksql_lib PUBLIC ${CMAKE_SOURCE_DIR})
@@ -49,7 +49,6 @@ target_link_libraries(marksql_lib PUBLIC sanitizers)
 # ---------------------------
 add_executable(marksql main.cpp
         Models/RID.h
-        Models/Slot.cpp
         Models/Slot.h
         Models/HeapPage.cpp
         Models/HeapPage.h
@@ -73,6 +72,9 @@ target_link_libraries(testReplacer PRIVATE marksql_lib GTest::gtest_main)
 add_executable(testBPM Tests/BpmTests.cpp)
 target_link_libraries(testBPM PRIVATE marksql_lib GTest::gtest_main)
 
+add_executable(testHeapPage Tests/HeapPageTests.cpp)
+target_link_libraries(testHeapPage PRIVATE marksql_lib GTest::gtest_main)
+
 # ---------------------------
 # GTEST DISCOVERY
 # ---------------------------
@@ -81,3 +83,4 @@ gtest_discover_tests(testDM)
 gtest_discover_tests(testPage)
 gtest_discover_tests(testReplacer)
 gtest_discover_tests(testBPM)
+gtest_discover_tests(testHeapPage)
