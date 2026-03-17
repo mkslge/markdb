@@ -91,3 +91,48 @@ TEST_F(TableHeapTest, RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes) 
     EXPECT_LT(heap_page.header()->free_space_start, heap_page.header()->free_space_end);
     bpm_.unpinPage(first_page_id, false);
 }
+
+TEST_F(TableHeapTest, GetTupleReadsBackInsertedTupleByRid) {
+    TableHeap table_heap(&dm_, &bpm_);
+    Tuple inserted = {'r', 'e', 'a', 'd'};
+
+    RID rid = table_heap.insertTuple(inserted);
+    Tuple fetched;
+
+    ASSERT_TRUE(table_heap.getTuple(rid, fetched));
+    EXPECT_EQ(fetched, inserted);
+}
+
+TEST_F(TableHeapTest, ApplyDeleteMakesTupleEmptyAtExistingRid) {
+    TableHeap table_heap(&dm_, &bpm_);
+    Tuple inserted = {'d', 'e', 'l', 'e', 't', 'e'};
+
+    RID rid = table_heap.insertTuple(inserted);
+    ASSERT_TRUE(table_heap.applyDelete(rid));
+
+    Tuple fetched;
+    ASSERT_TRUE(table_heap.getTuple(rid, fetched));
+    EXPECT_TRUE(fetched.empty());
+}
+
+TEST_F(TableHeapTest, EditTupleDeletesOldRidAndReinsertsReplacementTuple) {
+    TableHeap table_heap(&dm_, &bpm_);
+    Tuple original = {'o', 'l', 'd'};
+    Tuple replacement(48, 'n');
+
+    RID original_rid = table_heap.insertTuple(original);
+
+    ASSERT_TRUE(table_heap.editTuple(original_rid, replacement));
+
+    Tuple old_slot_contents;
+    ASSERT_TRUE(table_heap.getTuple(original_rid, old_slot_contents));
+    EXPECT_TRUE(old_slot_contents.empty());
+
+    Page* page = bpm_.fetchPage(original_rid.page_id);
+    ASSERT_NE(page, nullptr);
+
+    HeapPage heap_page(page->get_data());
+    EXPECT_EQ(heap_page.getNumSlots(), 2);
+    EXPECT_EQ(heap_page.getTuple(1), replacement);
+    bpm_.unpinPage(original_rid.page_id, false);
+}

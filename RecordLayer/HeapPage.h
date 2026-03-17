@@ -28,8 +28,11 @@ public:
     std::uint16_t getFreeSpace();
 
     std::optional<int> insertTuple(const Tuple& tuple);
+    bool changeTuple(const std::uint16_t slot_id, const Tuple& new_tuple);
     Tuple getTuple(std::uint16_t slot_id);
-    void deleteTuple(std::uint16_t slot_id);
+
+
+    void applyDelete(std::uint16_t slot_id);
 
     [[nodiscard]] std::uint16_t getNextPage() const;
     [[nodiscard]] std::uint16_t getPrevPage() const;

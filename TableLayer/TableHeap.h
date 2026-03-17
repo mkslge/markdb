@@ -17,6 +17,12 @@ public:
     TableHeap(DiskManager* dm, BufferPoolManager* bpm);
 
     RID insertTuple(const Tuple& to_insert);
+    bool getTuple(const RID& rid, Tuple& out);
+
+    bool applyDelete(const RID& rid);
+
+    bool editTuple(const RID& rid, const Tuple& new_tuple); //could have a tuple that we need to move the page
+
 };
 
 

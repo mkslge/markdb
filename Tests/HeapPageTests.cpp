@@ -62,11 +62,11 @@ TEST_F(HeapPageTest, DeleteTuple) {
 
     ASSERT_TRUE(slot_id.has_value());
 
-    page.deleteTuple(slot_id.value());
+    page.applyDelete(slot_id.value());
 
     Tuple fetched = page.getTuple(slot_id.value());
 
-    // depends on your delete semantics
+    EXPECT_TRUE(fetched.empty());
 
 }
 
@@ -89,3 +89,59 @@ TEST_F(HeapPageTest, InsertUntilFull) {
     EXPECT_FALSE(fail.has_value());
 }
 
+TEST_F(HeapPageTest, SetAndGetLinkedPageIds) {
+    HeapPage page(buffer);
+
+    page.setPrevPage(11);
+    page.setNextPage(22);
+
+    EXPECT_EQ(page.getPrevPage(), 11);
+    EXPECT_EQ(page.getNextPage(), 22);
+}
+
+TEST_F(HeapPageTest, ChangeTupleReplacesTupleWhenReplacementIsSameSize) {
+    HeapPage page(buffer);
+    Tuple original = {'o', 'l', 'd'};
+    Tuple replacement = {'n', 'e', 'w'};
+
+    auto slot_id = page.insertTuple(original);
+
+    ASSERT_TRUE(slot_id.has_value());
+    EXPECT_TRUE(page.changeTuple(slot_id.value(), replacement));
+    EXPECT_EQ(page.getNumSlots(), 1);
+    EXPECT_EQ(page.getTuple(slot_id.value()), replacement);
+}
+
+TEST_F(HeapPageTest, ChangeTupleCanShrinkTupleWithoutAffectingOtherSlots) {
+    HeapPage page(buffer);
+    Tuple original = {'a', 'b', 'c', 'd', 'e'};
+    Tuple replacement = {'z', 'z'};
+    Tuple neighbor = {'n', 'e', 'x', 't'};
+
+    auto changed_slot = page.insertTuple(original);
+    auto neighbor_slot = page.insertTuple(neighbor);
+
+    ASSERT_TRUE(changed_slot.has_value());
+    ASSERT_TRUE(neighbor_slot.has_value());
+
+    EXPECT_TRUE(page.changeTuple(changed_slot.value(), replacement));
+    EXPECT_EQ(page.getTuple(changed_slot.value()), replacement);
+    EXPECT_EQ(page.getTuple(neighbor_slot.value()), neighbor);
+    EXPECT_EQ(page.getNumSlots(), 2);
+}
+
+TEST_F(HeapPageTest, ChangeTupleReturnsFalseWhenReplacementCannotFitAndLeavesTupleUntouched) {
+    HeapPage page(buffer);
+    Tuple original = {'o', 'l', 'd'};
+    Tuple filler(200, 'f');
+    Tuple too_large(512, 'x');
+
+    auto slot_id = page.insertTuple(original);
+    ASSERT_TRUE(slot_id.has_value());
+
+    while (page.insertTuple(filler).has_value()) {
+    }
+
+    EXPECT_FALSE(page.changeTuple(slot_id.value(), too_large));
+    EXPECT_EQ(page.getTuple(slot_id.value()), original);
+}

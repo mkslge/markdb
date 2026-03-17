@@ -19,7 +19,7 @@ RID TableHeap::insertTuple(const Tuple& to_insert) {
         //grab our page
         Page* page = bpm_->fetchPage(curr_page_id);
 
-        //if it doesnt exist we'll have to create a new page
+        //if it doesn't exist we'll have to create a new page
         if (page == nullptr) {
             curr_page_id = dm_->allocatePage();
         }
@@ -42,3 +42,79 @@ RID TableHeap::insertTuple(const Tuple& to_insert) {
 
     return rid;
 }
+
+
+bool TableHeap::getTuple(const RID &rid, Tuple& out) {
+    int curr_page_id = first_page_id_;
+
+    while (true) {
+        Page* page = bpm_->fetchPage(curr_page_id);
+        if (page == nullptr) {
+            return false;
+        }
+        HeapPage hp(page->get_data());
+
+        if (page->get_page_id() == rid.page_id) {
+            out = hp.getTuple(rid.slot_id);
+            return true;
+        }
+        curr_page_id = hp.getNextPage();
+    }
+
+
+}
+
+
+
+
+
+bool TableHeap::applyDelete(const RID &rid) {
+    int curr_page_id = first_page_id_;
+
+    while (true) {
+        Page* page = bpm_->fetchPage(curr_page_id);
+        if (page == nullptr) {
+            return false;
+        }
+        HeapPage hp(page->get_data());
+
+        if (page->get_page_id() == rid.page_id) {
+
+            hp.applyDelete(rid.slot_id);
+            return true;
+        }
+        curr_page_id = hp.getNextPage();
+    }
+
+
+}
+
+bool TableHeap::editTuple(const RID &rid, const Tuple &new_tuple) {
+    int curr_page_id = first_page_id_;
+    while (true) {
+        Page* page = bpm_->fetchPage(curr_page_id);
+        if (page == nullptr) {
+            return false;
+        }
+
+        HeapPage hp(page->get_data());
+        if (rid.page_id == curr_page_id) {
+
+            //exit page accordingly
+            if (!hp.changeTuple(rid.slot_id, new_tuple)) {
+                //if we didnt have space to change the tuple we're going to want to delete it,
+                //but then add it back in a page w/ space.
+                hp.applyDelete(rid.slot_id);
+                this->insertTuple(new_tuple);
+                return true;
+            }
+        }
+
+        curr_page_id = hp.getNextPage();
+
+
+    }
+}
+
+
+

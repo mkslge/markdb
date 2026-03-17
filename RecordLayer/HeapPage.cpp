@@ -59,6 +59,12 @@ std::optional<int> HeapPage::insertTuple(const Tuple &tuple) {
     return slot_id;
 }
 
+bool HeapPage::changeTuple(const std::uint16_t slot_id, const Tuple &new_tuple) {
+    //TODO: implement!
+    return false;
+}
+
+
 Tuple HeapPage::getTuple(std::uint16_t slot_id) {
     Slot* slot = getSlot(slot_id);
     char* start = data_ +slot->offset;
@@ -69,7 +75,9 @@ Tuple HeapPage::getTuple(std::uint16_t slot_id) {
 
 }
 
-void HeapPage::deleteTuple(std::uint16_t slot_id) {
+
+
+void HeapPage::applyDelete(std::uint16_t slot_id) {
     Slot* slot = getSlot(slot_id);
     slot->length = 0;
 }
@@ -101,6 +109,8 @@ void HeapPage::setNextPage(std::uint16_t next_page) {
 void HeapPage::setPrevPage(std::uint16_t prev_page) {
     prev_page_id_ = prev_page;
 }
+
+
 
 
 
