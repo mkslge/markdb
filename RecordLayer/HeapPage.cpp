@@ -6,12 +6,13 @@
 
 HeapPage::HeapPage(char* data) {
     data_ = data;
+    next_page_id_ = -1;
+    prev_page_id_ = -1;
     HeapPageHeader* header = this->header();
     if (header->free_space_start == 0) {
         header->num_slots = 0;
         header->free_space_start = sizeof(HeapPageHeader);
         header->free_space_end = PAGE_SIZE;
-
     }
 }
 
@@ -84,6 +85,23 @@ void HeapPage::setSlot(std::uint16_t slot_id, const Slot &slot) {
     toReplace->offset = slot.offset;
     toReplace->length = slot.length;
 }
+
+std::uint16_t HeapPage::getNextPage() const {
+    return next_page_id_;
+}
+
+std::uint16_t HeapPage::getPrevPage() const {
+    return prev_page_id_;
+}
+
+void HeapPage::setNextPage(std::uint16_t next_page) {
+    next_page_id_ = next_page;
+}
+
+void HeapPage::setPrevPage(std::uint16_t prev_page) {
+    prev_page_id_ = prev_page;
+}
+
 
 
 

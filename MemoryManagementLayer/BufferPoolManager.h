@@ -6,7 +6,7 @@
 #define BUFFERPOOLMANAGER_H
 #include <array>
 
-#include "../DiskManager.h"
+#include "../DiskLayer/DiskManager.h"
 #include <map>
 #include <list>
 #include "Replacer/LRUReplacer.h"

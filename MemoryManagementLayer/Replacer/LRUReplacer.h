@@ -6,7 +6,7 @@
 #define LRUREPLACER_H
 
 #include "Replacer.h"
-#include "../../Page.h"
+#include "../../Models/Page.h"
 #include <list>
 
 
@@ -32,7 +32,7 @@ private:
 
 public:
     LRUReplacer();
-    ~LRUReplacer();
+    ~LRUReplacer() override;
     LRUReplacer(const LRUReplacer& other) = delete;
     LRUReplacer& operator =(const LRUReplacer & other) = delete;
     LRUReplacer& operator =(const LRUReplacer&& ohter) = delete;
@@ -42,7 +42,7 @@ public:
 
     void pin(int frame_id) override;
     void unpin(int frame_id) override;
-    std::size_t size() const override;
+    [[nodiscard]] std::size_t size() const override;
 
 private:
     static void deleteNode(Node* to_delete);

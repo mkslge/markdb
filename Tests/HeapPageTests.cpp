@@ -3,7 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include <cstring>
-#include "../Models/HeapPage.h"
+#include "../RecordLayer/HeapPage.h"
 
 
 class HeapPageTest : public ::testing::Test {

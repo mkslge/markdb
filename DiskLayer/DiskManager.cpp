@@ -66,14 +66,14 @@ char* DiskManager::readPage(int page_id, char* buf) {
     return buf;
 }
 
-size_t DiskManager::allocatePage() {
+int DiskManager::allocatePage() {
     return next_page_id_++;
 }
 
 
 
 
- off_t DiskManager::getByteOffset(size_t page_id) {
+ int DiskManager::getByteOffset(int page_id) {
 
-    return static_cast<off_t>(page_id) * PAGE_SIZE;
+    return page_id * PAGE_SIZE;
 }

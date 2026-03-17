@@ -33,11 +33,12 @@ target_link_options(sanitizers INTERFACE
 # DBMS IMPLEMENTATION LIBRARY
 # ---------------------------
 add_library(marksql_lib
-        Page.cpp
-        DiskManager.cpp
-        BufferPoolManager/BufferPoolManager.cpp
-        BufferPoolManager/Replacer/LRUReplacer.cpp
-        Models/HeapPage.cpp
+        Models/Page.cpp
+        DiskLayer/DiskManager.cpp
+        MemoryManagementLayer/BufferPoolManager.cpp
+        MemoryManagementLayer/Replacer/LRUReplacer.cpp
+        RecordLayer/HeapPage.cpp
+        TableLayer/TableHeap.cpp
 )
 
 target_include_directories(marksql_lib PUBLIC ${CMAKE_SOURCE_DIR})
@@ -48,13 +49,12 @@ target_link_libraries(marksql_lib PUBLIC sanitizers)
 # MAIN EXECUTABLE
 # ---------------------------
 add_executable(marksql main.cpp
-        Models/RID.h
-        Models/Slot.h
-        Models/HeapPage.cpp
-        Models/HeapPage.h
+
+        RecordLayer/HeapPage.cpp
         Models/Tuple.cpp
-        Models/Tuple.h
-        Models/HeapPageHeader.h)
+
+        TableLayer/TableHeap.cpp
+)
 target_link_libraries(marksql PRIVATE marksql_lib)
 
 # ---------------------------
@@ -74,6 +74,10 @@ target_link_libraries(testBPM PRIVATE marksql_lib GTest::gtest_main)
 
 add_executable(testHeapPage Tests/HeapPageTests.cpp)
 target_link_libraries(testHeapPage PRIVATE marksql_lib GTest::gtest_main)
+
+add_executable(testTableHeap
+        Tests/TableHeapTests.cpp)
+target_link_libraries(testTableHeap PRIVATE marksql_lib GTest::gtest_main)
 
 # ---------------------------
 # GTEST DISCOVERY

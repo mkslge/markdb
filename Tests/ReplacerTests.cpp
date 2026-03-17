@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "../BufferPoolManager/Replacer/LRUReplacer.h"
+#include "../MemoryManagementLayer/Replacer/LRUReplacer.h"
 
 TEST(LRUReplacerTest, VictimFromEmpty) {
     LRUReplacer r;

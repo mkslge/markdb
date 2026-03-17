@@ -2,7 +2,7 @@
 // Created by Mark on 2/17/26.
 //
 #include <gtest/gtest.h>
-#include "../Page.h"
+#include "../Models/Page.h"
 
 TEST(PageTest, DefaultConstructor) {
     Page page;

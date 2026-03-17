@@ -3,8 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "../DiskManager.h"
-#include "../BufferPoolManager/BufferPoolManager.h"
+#include "../DiskLayer/DiskManager.h"
+#include "../MemoryManagementLayer/BufferPoolManager.h"
 
 TEST(BufferPoolManagerTest, FetchPageFromDisk) {
     DiskManager dm("test.db");
