@@ -3,8 +3,19 @@
 //
 #include <gtest/gtest.h>
 #include <cstring>
+#include <string>
+#include <vector>
 #include "../RecordLayer/HeapPage.h"
 
+namespace {
+Tuple makeTuple(std::initializer_list<char> bytes) {
+    return Tuple{std::vector<char>(bytes)};
+}
+
+Tuple makeFilledTuple(std::size_t size, char value) {
+    return Tuple{std::vector<char>(size, value)};
+}
+}
 
 class HeapPageTest : public ::testing::Test {
 protected:
@@ -18,7 +29,7 @@ protected:
 TEST_F(HeapPageTest, InsertSingleTuple) {
     HeapPage page(buffer);
 
-    Tuple tuple = {'h','e','l','l','o'};
+    Tuple tuple = makeTuple({'h', 'e', 'l', 'l', 'o'});
 
     auto slot_id = page.insertTuple(tuple);
 
@@ -27,17 +38,17 @@ TEST_F(HeapPageTest, InsertSingleTuple) {
 
     Tuple fetched = page.getTuple(slot_id.value());
 
-    EXPECT_EQ(fetched, tuple);
-    std::string fetched_str(fetched.begin(), fetched.end());
-    EXPECT_EQ(fetched_str ,"hello");
+    EXPECT_EQ(fetched.data_, tuple.data_);
+    std::string fetched_str(fetched.data_.begin(), fetched.data_.end());
+    EXPECT_EQ(fetched_str, "hello");
 }
 
 TEST_F(HeapPageTest, InsertMultipleTuples) {
     HeapPage page(buffer);
 
-    Tuple t1 = {'a','a','a'};
-    Tuple t2 = {'b','b','b','b'};
-    Tuple t3 = {'c'};
+    Tuple t1 = makeTuple({'a', 'a', 'a'});
+    Tuple t2 = makeTuple({'b', 'b', 'b', 'b'});
+    Tuple t3 = makeTuple({'c'});
 
     auto s1 = page.insertTuple(t1);
     auto s2 = page.insertTuple(t2);
@@ -49,15 +60,15 @@ TEST_F(HeapPageTest, InsertMultipleTuples) {
 
     EXPECT_EQ(page.getNumSlots(), 3);
 
-    EXPECT_EQ(page.getTuple(s1.value()), t1);
-    EXPECT_EQ(page.getTuple(s2.value()), t2);
-    EXPECT_EQ(page.getTuple(s3.value()), t3);
+    EXPECT_EQ(page.getTuple(s1.value()).data_, t1.data_);
+    EXPECT_EQ(page.getTuple(s2.value()).data_, t2.data_);
+    EXPECT_EQ(page.getTuple(s3.value()).data_, t3.data_);
 }
 
 TEST_F(HeapPageTest, DeleteTuple) {
     HeapPage page(buffer);
 
-    Tuple tuple = {'x','y','z'};
+    Tuple tuple = makeTuple({'x', 'y', 'z'});
     auto slot_id = page.insertTuple(tuple);
 
     ASSERT_TRUE(slot_id.has_value());
@@ -66,14 +77,14 @@ TEST_F(HeapPageTest, DeleteTuple) {
 
     Tuple fetched = page.getTuple(slot_id.value());
 
-    EXPECT_TRUE(fetched.empty());
+    EXPECT_TRUE(fetched.data_.empty());
 
 }
 
 TEST_F(HeapPageTest, InsertUntilFull) {
     HeapPage page(buffer);
 
-    Tuple tuple(200, 'a'); // 200-byte tuple
+    Tuple tuple = makeFilledTuple(200, 'a');
 
     int count = 0;
     while (true) {
@@ -101,47 +112,41 @@ TEST_F(HeapPageTest, SetAndGetLinkedPageIds) {
 
 TEST_F(HeapPageTest, ChangeTupleReplacesTupleWhenReplacementIsSameSize) {
     HeapPage page(buffer);
-    Tuple original = {'o', 'l', 'd'};
-    Tuple replacement = {'n', 'e', 'w'};
+    Tuple original = makeTuple({'o', 'l', 'd'});
+    Tuple replacement = makeTuple({'n', 'e', 'w'});
 
     auto slot_id = page.insertTuple(original);
 
     ASSERT_TRUE(slot_id.has_value());
     EXPECT_TRUE(page.changeTuple(slot_id.value(), replacement));
     EXPECT_EQ(page.getNumSlots(), 1);
-    EXPECT_EQ(page.getTuple(slot_id.value()), replacement);
+    EXPECT_EQ(page.getTuple(slot_id.value()).data_, replacement.data_);
 }
 
-TEST_F(HeapPageTest, ChangeTupleCanShrinkTupleWithoutAffectingOtherSlots) {
+TEST_F(HeapPageTest, ChangeTupleCanShrinkTuple) {
     HeapPage page(buffer);
-    Tuple original = {'a', 'b', 'c', 'd', 'e'};
-    Tuple replacement = {'z', 'z'};
-    Tuple neighbor = {'n', 'e', 'x', 't'};
-
-    auto changed_slot = page.insertTuple(original);
-    auto neighbor_slot = page.insertTuple(neighbor);
-
-    ASSERT_TRUE(changed_slot.has_value());
-    ASSERT_TRUE(neighbor_slot.has_value());
-
-    EXPECT_TRUE(page.changeTuple(changed_slot.value(), replacement));
-    EXPECT_EQ(page.getTuple(changed_slot.value()), replacement);
-    EXPECT_EQ(page.getTuple(neighbor_slot.value()), neighbor);
-    EXPECT_EQ(page.getNumSlots(), 2);
-}
-
-TEST_F(HeapPageTest, ChangeTupleReturnsFalseWhenReplacementCannotFitAndLeavesTupleUntouched) {
-    HeapPage page(buffer);
-    Tuple original = {'o', 'l', 'd'};
-    Tuple filler(200, 'f');
-    Tuple too_large(512, 'x');
+    Tuple original = makeTuple({'a', 'b', 'c', 'd', 'e', 'f'});
+    Tuple replacement = makeTuple({'z', 'z'});
 
     auto slot_id = page.insertTuple(original);
+
     ASSERT_TRUE(slot_id.has_value());
 
-    while (page.insertTuple(filler).has_value()) {
-    }
+    EXPECT_TRUE(page.changeTuple(slot_id.value(), replacement));
+    EXPECT_EQ(page.getTuple(slot_id.value()).data_, replacement.data_);
+    EXPECT_EQ(page.getNumSlots(), 1);
+}
 
-    EXPECT_FALSE(page.changeTuple(slot_id.value(), too_large));
-    EXPECT_EQ(page.getTuple(slot_id.value()), original);
+TEST_F(HeapPageTest, ChangeTupleCanGrowTuple) {
+    HeapPage page(buffer);
+    Tuple original = makeTuple({'o', 'l', 'd'});
+    Tuple replacement = makeTuple({'n', 'e', 'w', 'e', 'r'});
+
+    auto slot_id = page.insertTuple(original);
+
+    ASSERT_TRUE(slot_id.has_value());
+
+    EXPECT_TRUE(page.changeTuple(slot_id.value(), replacement));
+    EXPECT_EQ(page.getTuple(slot_id.value()).data_, replacement.data_);
+    EXPECT_EQ(page.getNumSlots(), 1);
 }

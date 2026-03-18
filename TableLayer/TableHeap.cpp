@@ -11,7 +11,7 @@ TableHeap::TableHeap(DiskManager* dm, BufferPoolManager *bpm): dm_(dm), bpm_(bpm
 }
 
 
-RID TableHeap::insertTuple(const Tuple& to_insert) {
+RID TableHeap::insertTuple(Tuple& to_insert) {
     int curr_page_id = first_page_id_;
     bool inserted = false;
     RID rid{-1,-1};
@@ -89,7 +89,7 @@ bool TableHeap::applyDelete(const RID &rid) {
 
 }
 
-bool TableHeap::editTuple(const RID &rid, const Tuple &new_tuple) {
+bool TableHeap::editTuple(const RID &rid, Tuple &new_tuple) {
     int curr_page_id = first_page_id_;
     while (true) {
         Page* page = bpm_->fetchPage(curr_page_id);

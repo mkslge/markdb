@@ -60,23 +60,27 @@ target_link_libraries(marksql PRIVATE marksql_lib)
 # ---------------------------
 # TESTS
 # ---------------------------
-add_executable(testDM Tests/DmTests.cpp)
+add_executable(testDM)
+target_sources(testDM PRIVATE Tests/DmTests.cpp)
 target_link_libraries(testDM PRIVATE marksql_lib GTest::gtest_main)
 
-add_executable(testPage Tests/PageTests.cpp)
+add_executable(testPage)
+target_sources(testPage PRIVATE Tests/PageTests.cpp)
 target_link_libraries(testPage PRIVATE marksql_lib GTest::gtest_main)
 
-add_executable(testReplacer Tests/ReplacerTests.cpp)
+add_executable(testReplacer)
+target_sources(testReplacer PRIVATE Tests/ReplacerTests.cpp)
 target_link_libraries(testReplacer PRIVATE marksql_lib GTest::gtest_main)
 
-add_executable(testBPM Tests/BpmTests.cpp)
+add_executable(testBPM)
+target_sources(testBPM PRIVATE Tests/BpmTests.cpp)
 target_link_libraries(testBPM PRIVATE marksql_lib GTest::gtest_main)
 
 add_executable(testHeapPage Tests/HeapPageTests.cpp)
 target_link_libraries(testHeapPage PRIVATE marksql_lib GTest::gtest_main)
 
-add_executable(testTableHeap
-        Tests/TableHeapTests.cpp)
+add_executable(testTableHeap)
+target_sources(testTableHeap PRIVATE Tests/TableHeapTests.cpp)
 target_link_libraries(testTableHeap PRIVATE marksql_lib GTest::gtest_main)
 
 # ---------------------------

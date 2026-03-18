@@ -30,17 +30,17 @@ void  HeapPage::setNumSlots(int num_slots) {
 
 
 std::uint16_t HeapPage::getFreeSpace() {
-    return header()->free_space_start;
+    return header()->free_space_end - header()->free_space_start;
 }
 
-std::optional<int> HeapPage::insertTuple(const Tuple &tuple) {
+std::optional<int> HeapPage::insertTuple(Tuple &tuple) {
     int space_needed = tuple.size() + sizeof(Slot);
     //need to check how much space is needed
 
     if (header()->free_space_end - header()->free_space_start  < space_needed) {
-        std::cout << header()->free_space_end - header()->free_space_start << " " << space_needed << "\n";
         return std::nullopt;
     }
+
     //copy over data to page
     std::uint16_t start_of_tuple = header()->free_space_end - tuple.size();
     std::memcpy(data_ + start_of_tuple, tuple.data(), tuple.size());
@@ -59,9 +59,51 @@ std::optional<int> HeapPage::insertTuple(const Tuple &tuple) {
     return slot_id;
 }
 
-bool HeapPage::changeTuple(const std::uint16_t slot_id, const Tuple &new_tuple) {
-    //TODO: implement!
-    return false;
+bool HeapPage::changeTuple(const std::uint16_t slot_id, Tuple &new_tuple) {
+    if(slot_id < 0 || slot_id >= getNumSlots()) {
+        return false;
+    }
+    
+    Tuple curr_tuple = getTuple(slot_id);
+    Slot* curr_slot = getSlot(slot_id);
+    int new_size = new_tuple.size();
+    int old_size = curr_slot->length;
+    int size_diff = new_size - old_size;
+    if(size_diff > getFreeSpace()) {
+        return false;
+    }
+
+    if(new_size == old_size) {
+        
+        memcpy(data_ + curr_slot->offset, new_tuple.data(), new_size);
+    } else if(new_size < old_size) {
+        curr_slot->length = new_size;
+        memcpy(data_ + curr_slot->offset, new_tuple.data(), new_size);
+    } else {
+        //here we actually need to shift.
+        Slot* curr_slot = getSlot(slot_id );
+        memmove(data_ + curr_slot->offset - size_diff, new_tuple.data(), new_tuple.size());
+
+        curr_slot->length = new_size;
+        curr_slot->offset -= size_diff;
+        
+        header()->free_space_start -= size_diff;
+        
+        for(int sid = slot_id + 1; sid < getNumSlots();sid++) {
+            curr_slot = getSlot(sid);
+
+            memmove(data_ + curr_slot->offset - size_diff, data_ + curr_slot->offset, curr_slot->length);
+            curr_slot->offset -= size_diff;
+        }
+
+        //memmove(data_ + next_slot->offset + size_diff, data_ + next_slot->offset, next_slot->length);
+        
+        
+        
+    }
+
+    return true;
+
 }
 
 
@@ -71,8 +113,7 @@ Tuple HeapPage::getTuple(std::uint16_t slot_id) {
     char* end = data_ + slot->offset + slot->length;
 
     //using constructor with start and end iterator points
-    return {start, end};
-
+    return {{start, end}};
 }
 
 

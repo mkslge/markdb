@@ -3,10 +3,21 @@
 //
 
 #include <gtest/gtest.h>
+#include <vector>
 #include "../DiskLayer/DiskManager.h"
 #include "../MemoryManagementLayer/BufferPoolManager.h"
 #include "../RecordLayer/HeapPage.h"
 #include "../TableLayer/TableHeap.h"
+
+namespace {
+Tuple makeTuple(std::initializer_list<char> bytes) {
+    return Tuple{std::vector<char>(bytes)};
+}
+
+Tuple makeFilledTuple(std::size_t size, char value) {
+    return Tuple{std::vector<char>(size, value)};
+}
+}
 
 class TableHeapTest : public ::testing::Test {
 protected:
@@ -21,7 +32,7 @@ TEST_F(TableHeapTest, ConstructorCreatesUsableTableHeap) {
 
 TEST_F(TableHeapTest, InsertTupleReturnsValidRid) {
     TableHeap table_heap(&dm_, &bpm_);
-    Tuple tuple = {'h', 'e', 'l', 'l', 'o'};
+    Tuple tuple = makeTuple({'h', 'e', 'l', 'l', 'o'});
 
     RID rid = table_heap.insertTuple(tuple);
 
@@ -31,7 +42,7 @@ TEST_F(TableHeapTest, InsertTupleReturnsValidRid) {
 
 TEST_F(TableHeapTest, InsertedTupleCanBeReadBackFromHeapPage) {
     TableHeap table_heap(&dm_, &bpm_);
-    Tuple tuple = {'m', 'a', 'r', 'k'};
+    Tuple tuple = makeTuple({'m', 'a', 'r', 'k'});
 
     RID rid = table_heap.insertTuple(tuple);
 
@@ -41,7 +52,7 @@ TEST_F(TableHeapTest, InsertedTupleCanBeReadBackFromHeapPage) {
     HeapPage heap_page(page->get_data());
     Tuple fetched = heap_page.getTuple(rid.slot_id);
 
-    EXPECT_EQ(fetched, tuple);
+    EXPECT_EQ(fetched.data_, tuple.data_);
     bpm_.unpinPage(rid.page_id, false);
 }
 
@@ -49,22 +60,22 @@ TEST_F(TableHeapTest, RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes) 
     TableHeap table_heap(&dm_, &bpm_);
 
     std::vector<Tuple> tuples = {
-            {'a'},
-            {'b', 'b'},
-            {'c', 'c', 'c'},
-            {'d', 'e', 'f', 'g', 'h'},
-            Tuple(32, 'x'),
-            Tuple(64, 'y'),
-            {'z', '\0', 'z', '\1', 'z'},
-            {'m', 'a', 'r', 'k', 's', 'q', 'l'},
-            Tuple(128, 'q'),
-            {'l', 'a', 's', 't'}
+            makeTuple({'a'}),
+            makeTuple({'b', 'b'}),
+            makeTuple({'c', 'c', 'c'}),
+            makeTuple({'d', 'e', 'f', 'g', 'h'}),
+            makeFilledTuple(32, 'x'),
+            makeFilledTuple(64, 'y'),
+            makeTuple({'z', '\0', 'z', '\1', 'z'}),
+            makeTuple({'m', 'a', 'r', 'k', 's', 'q', 'l'}),
+            makeFilledTuple(128, 'q'),
+            makeTuple({'l', 'a', 's', 't'})
     };
 
     std::vector<RID> rids;
     rids.reserve(tuples.size());
 
-    for (const Tuple& tuple : tuples) {
+    for (Tuple& tuple : tuples) {
         rids.push_back(table_heap.insertTuple(tuple));
     }
 
@@ -85,7 +96,7 @@ TEST_F(TableHeapTest, RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes) 
 
     for (std::size_t i = 0; i < tuples.size(); i++) {
         Tuple fetched = heap_page.getTuple(rids[i].slot_id);
-        EXPECT_EQ(fetched, tuples[i]) << "Tuple mismatch at slot " << i;
+        EXPECT_EQ(fetched.data_, tuples[i].data_) << "Tuple mismatch at slot " << i;
     }
 
     EXPECT_LT(heap_page.header()->free_space_start, heap_page.header()->free_space_end);
@@ -94,31 +105,31 @@ TEST_F(TableHeapTest, RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes) 
 
 TEST_F(TableHeapTest, GetTupleReadsBackInsertedTupleByRid) {
     TableHeap table_heap(&dm_, &bpm_);
-    Tuple inserted = {'r', 'e', 'a', 'd'};
+    Tuple inserted = makeTuple({'r', 'e', 'a', 'd'});
 
     RID rid = table_heap.insertTuple(inserted);
     Tuple fetched;
 
     ASSERT_TRUE(table_heap.getTuple(rid, fetched));
-    EXPECT_EQ(fetched, inserted);
+    EXPECT_EQ(fetched.data_, inserted.data_);
 }
 
 TEST_F(TableHeapTest, ApplyDeleteMakesTupleEmptyAtExistingRid) {
     TableHeap table_heap(&dm_, &bpm_);
-    Tuple inserted = {'d', 'e', 'l', 'e', 't', 'e'};
+    Tuple inserted = makeTuple({'d', 'e', 'l', 'e', 't', 'e'});
 
     RID rid = table_heap.insertTuple(inserted);
     ASSERT_TRUE(table_heap.applyDelete(rid));
 
     Tuple fetched;
     ASSERT_TRUE(table_heap.getTuple(rid, fetched));
-    EXPECT_TRUE(fetched.empty());
+    EXPECT_TRUE(fetched.data_.empty());
 }
 
 TEST_F(TableHeapTest, EditTupleDeletesOldRidAndReinsertsReplacementTuple) {
     TableHeap table_heap(&dm_, &bpm_);
-    Tuple original = {'o', 'l', 'd'};
-    Tuple replacement(48, 'n');
+    Tuple original = makeTuple({'o', 'l', 'd'});
+    Tuple replacement = makeFilledTuple(48, 'n');
 
     RID original_rid = table_heap.insertTuple(original);
 
@@ -126,13 +137,13 @@ TEST_F(TableHeapTest, EditTupleDeletesOldRidAndReinsertsReplacementTuple) {
 
     Tuple old_slot_contents;
     ASSERT_TRUE(table_heap.getTuple(original_rid, old_slot_contents));
-    EXPECT_TRUE(old_slot_contents.empty());
+    EXPECT_TRUE(old_slot_contents.data_.empty());
 
     Page* page = bpm_.fetchPage(original_rid.page_id);
     ASSERT_NE(page, nullptr);
 
     HeapPage heap_page(page->get_data());
     EXPECT_EQ(heap_page.getNumSlots(), 2);
-    EXPECT_EQ(heap_page.getTuple(1), replacement);
+    EXPECT_EQ(heap_page.getTuple(1).data_, replacement.data_);
     bpm_.unpinPage(original_rid.page_id, false);
 }

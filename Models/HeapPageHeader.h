@@ -12,9 +12,9 @@
 #pragma pack(1)
 
 struct HeapPageHeader {
-    std::uint16_t num_slots;
-    std::uint16_t free_space_start;
-    std::uint16_t free_space_end;
+    std::uint32_t num_slots;
+    std::uint32_t free_space_start;
+    std::uint32_t free_space_end;
 };
 
 #endif //HEAPPAGEHEADER_H

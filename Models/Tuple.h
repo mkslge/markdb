@@ -5,12 +5,18 @@
 #ifndef TUPLE_H
 #define TUPLE_H
 
-
+#include <vector>
 
 class Tuple {
 public:
-    int pointer;
-    int length;
+    std::vector<char> data_;
+    std::size_t size() const {
+        return data_.size(); 
+    }
+
+    char* data() {
+        return data_.data();
+    }
 };
 
 

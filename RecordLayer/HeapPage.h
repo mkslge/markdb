@@ -11,8 +11,9 @@
 #include <optional>
 #include <vector>
 #include "../Models/Page.h"
+#include "../Models/Tuple.h"
 #include<iostream>
-using Tuple = std::vector<char>;
+//using Tuple = std::vector<char>;
 
 class HeapPage {
 private:
@@ -27,8 +28,8 @@ public:
     void setNumSlots(int num_slots);
     std::uint16_t getFreeSpace();
 
-    std::optional<int> insertTuple(const Tuple& tuple);
-    bool changeTuple(const std::uint16_t slot_id, const Tuple& new_tuple);
+    std::optional<int> insertTuple(Tuple& tuple);
+    bool changeTuple(const std::uint16_t slot_id, Tuple& new_tuple);
     Tuple getTuple(std::uint16_t slot_id);
 
 
