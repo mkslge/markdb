@@ -52,7 +52,7 @@ add_executable(marksql main.cpp
 
         RecordLayer/HeapPage.cpp
         Models/Tuple.cpp
-
+        BPlusTree/BPlusTree.tpp
         TableLayer/TableHeap.cpp
 )
 target_link_libraries(marksql PRIVATE marksql_lib)
@@ -83,6 +83,11 @@ add_executable(testTableHeap)
 target_sources(testTableHeap PRIVATE Tests/TableHeapTests.cpp)
 target_link_libraries(testTableHeap PRIVATE marksql_lib GTest::gtest_main)
 
+
+add_executable(testBPlusTree)
+target_sources(testBPlusTree PRIVATE Tests/BPlusTreeTests.cpp BPlusTree/BPlusTree.tpp)
+target_link_libraries(testBPlusTree PRIVATE marksql_lib GTest::gtest_main)
+
 # ---------------------------
 # GTEST DISCOVERY
 # ---------------------------
@@ -92,3 +97,4 @@ gtest_discover_tests(testPage)
 gtest_discover_tests(testReplacer)
 gtest_discover_tests(testBPM)
 gtest_discover_tests(testHeapPage)
+gtest_discover_tests(testBPlusTree)
