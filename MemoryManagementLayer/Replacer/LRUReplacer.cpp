@@ -3,7 +3,7 @@
 //
 
 #include "LRUReplacer.h"
-
+#include <unordered_map>
 LRUReplacer::LRUReplacer() : dummy_start_(new Node(0)), dummy_end_(new Node(0)){
     dummy_start_->next_ = dummy_end_;
     dummy_end_->prev_ = dummy_start_;
