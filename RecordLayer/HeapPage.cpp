@@ -10,6 +10,7 @@
 #include <vector>
 #include "../Models/Page.h"
 #include "../Models/Tuple.h"
+#include <cstring>
 #include<iostream>
 
 HeapPage::HeapPage(char* data) {
