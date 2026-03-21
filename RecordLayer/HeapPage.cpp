@@ -3,6 +3,14 @@
 //
 
 #include "HeapPage.h"
+#include "../Models/Slot.h"
+#include "../Models/HeapPageHeader.h"
+#include "../RecordLayer/HeapPage.h"
+#include <optional>
+#include <vector>
+#include "../Models/Page.h"
+#include "../Models/Tuple.h"
+#include<iostream>
 
 HeapPage::HeapPage(char* data) {
     data_ = data;
@@ -43,7 +51,7 @@ std::optional<int> HeapPage::insertTuple(Tuple &tuple) {
 
     //copy over data to page
     std::uint16_t start_of_tuple = header()->free_space_end - tuple.size();
-    std::memcpy(data_ + start_of_tuple, tuple.data(), tuple.size());
+    memcpy(data_ + start_of_tuple, tuple.data(), tuple.size());
 
     //update slot dir
     std::uint16_t slot_id = header()->num_slots;

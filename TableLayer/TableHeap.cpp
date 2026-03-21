@@ -3,6 +3,9 @@
 //
 
 #include "TableHeap.h"
+#include "../RecordLayer/HeapPage.h"
+#include "MemoryManagementLayer/BufferPoolManager.h"
+#include "../Models/RID.h"
 
 
 TableHeap::TableHeap(DiskManager* dm, BufferPoolManager *bpm): dm_(dm), bpm_(bpm) {

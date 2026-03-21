@@ -3,6 +3,12 @@
 //
 
 #include "BufferPoolManager.h"
+#include "../DiskLayer/DiskManager.h"
+#include <map>
+#include <list>
+#include <unordered_map>
+#include "Replacer/LRUReplacer.h"
+#include "Replacer/Replacer.h"
 
 
 BufferPoolManager::BufferPoolManager()  {
