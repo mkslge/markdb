@@ -5,57 +5,105 @@ template<typename T>
 bool BPlusTree<T>::add(const T& val) {
     
 
-
-    return this->addHelper(root_, val);
+    std::vector<Node<T>*> ancestors{};
+    return this->addHelper(root_, val, ancestors);
 }
 
 
+
 template<typename T>
-bool BPlusTree<T>::addHelper(Node<T>* node, const T& val) {
+bool BPlusTree<T>::addHelper(Node<T>* node, const T& val, std::vector<Node<T>*>& ancestors) {
     assert(node != nullptr);
 
-    if(node->isLeaf()) {
+    if (node->isLeaf()) {
         node->add(val);
-        if(node->size() == order_) {
-            this->splitNode(node);
+        if (node->size() == order_) {
+            this->splitNode(node, ancestors);
         }
         return true;
-    } else {
-        InternalNode<T> *internal_node = static_cast<InternalNode<T>*>(node);
-        return this->addHelper(findChild(internal_node, val), val);
-    }
-
-    return true;
+    } 
+    
+    InternalNode<T>* internal_node = static_cast<InternalNode<T>*>(node);
+    ancestors.push_back(node);
+    return this->addHelper(findChild(internal_node, val), val, ancestors);
 }
 
 
 template<typename T>
-void BPlusTree<T>::splitNode(Node<T>* node) {
-    std::vector<T> keys = node->getList();
-    int size = node->size();
-    std::vector<T> half1(keys.begin(), keys.begin() + size / 2);
-    std::vector<T> half2(keys.begin() + (size / 2), keys.begin() + size );
-    for(int elem : half1) {
-        std::cout << elem << " ";
+void BPlusTree<T>::splitNode(Node<T>* node, std::vector<Node<T>*>& ancestors) {
+    const std::vector<T> keys = node->getList();
+    const size_t split_index = keys.size() / 2;
+
+    Node<T>* left_child = nullptr;
+    Node<T>* right_child = nullptr;
+    T separator_key{};
+
+    if (node->isLeaf()) {
+        std::vector<T> left_keys(keys.begin(), keys.begin() + static_cast<long>(split_index));
+        std::vector<T> right_keys(keys.begin() + static_cast<long>(split_index), keys.end());
+
+        auto* left_leaf = new LeafNode<T>();
+        auto* right_leaf = new LeafNode<T>();
+        left_leaf->setKeys(left_keys);
+        right_leaf->setKeys(right_keys);
+
+        left_child = left_leaf;
+        right_child = right_leaf;
+        separator_key = right_keys.front();
+    } else {
+        auto* internal_node = static_cast<InternalNode<T>*>(node);
+        const std::vector<Node<T>*> children = internal_node->children();
+
+        std::vector<T> left_keys(keys.begin(), keys.begin() + static_cast<long>(split_index));
+        std::vector<T> right_keys(keys.begin() + static_cast<long>(split_index + 1), keys.end());
+
+        std::vector<Node<T>*> left_children(
+                children.begin(),
+                children.begin() + static_cast<long>(split_index + 1));
+        std::vector<Node<T>*> right_children(
+                children.begin() + static_cast<long>(split_index + 1),
+                children.end());
+
+        auto* left_internal = new InternalNode<T>();
+        auto* right_internal = new InternalNode<T>();
+        left_internal->setValues(left_keys);
+        left_internal->setChildren(left_children);
+        right_internal->setValues(right_keys);
+        right_internal->setChildren(right_children);
+
+        left_child = left_internal;
+        right_child = right_internal;
+        separator_key = keys[split_index];
     }
-    std::cout << "\n";
-    for(int elem : half2) {
-        std::cout << elem << " ";
+
+    if (ancestors.empty()) {
+        auto* new_root = new InternalNode<T>();
+        new_root->setValues({separator_key});
+        new_root->setChildren({left_child, right_child});
+        root_ = new_root;
+        return;
     }
 
-    T new_split = half2[0];
-    
+    auto* parent = static_cast<InternalNode<T>*>(ancestors.back());
+    const int child_index = parent->indexOfChild(node);
+    assert(child_index >= 0);
 
+    std::vector<T> parent_keys = parent->getList();
+    parent_keys.insert(parent_keys.begin() + child_index, separator_key);
+    parent->setValues(parent_keys);
+    parent->replaceChildWithSplit(child_index, left_child, right_child);
 
-
-
+    if (parent->size() == order_) {
+        ancestors.pop_back();
+        splitNode(parent, ancestors);
+    }
 }
 
 template<typename T>
 Node<T>* BPlusTree<T>::findChild(InternalNode<T>* node, const T& val) {
 
     for(size_t i{}; i < node->size();i++) {
-        if(node->at(i) <= val) {
+        if(val < node->at(i)) {
             return node->childAt(i);
         }
     }
@@ -108,8 +156,6 @@ std::string BPlusTree<T>::toString() {
     
     return builder;
 }
-
-
 
 
 

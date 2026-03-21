@@ -31,9 +31,9 @@ class BPlusTree {
 
 
     private:
-        void splitNode(Node<T>* node);
+        void splitNode(Node<T>* node, std::vector<Node<T>*>& ancestors);
         Node<T>* findChild(InternalNode<T> *node, const T& val);
-        bool addHelper(Node<T>* node, const T& val);
+        bool addHelper(Node<T>* node, const T& val, std::vector<Node<T>*>& ancestors);
 
 
         bool containsHelper(Node<T>* node, const T& val);
