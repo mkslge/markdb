@@ -29,6 +29,8 @@ target_link_options(sanitizers INTERFACE
         -fsanitize=address,undefined
 )
 
+
+
 # ---------------------------
 # DBMS IMPLEMENTATION LIBRARY
 # ---------------------------
@@ -63,6 +65,7 @@ target_link_libraries(marksql PRIVATE marksql_lib)
 add_executable(testDM)
 target_sources(testDM PRIVATE Tests/DmTests.cpp)
 target_link_libraries(testDM PRIVATE marksql_lib GTest::gtest_main)
+target_compile_definitions(testDM PRIVATE PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 add_executable(testPage)
 target_sources(testPage PRIVATE Tests/PageTests.cpp)
