@@ -3,7 +3,7 @@
 //
 
 #include "Page.h"
-
+#include <cstring>
 
 Page::Page() : page_id_(INVALID_PAGE_ID),  is_dirty_(false), pins_(0){
     memset(data_, 0, 4096);
