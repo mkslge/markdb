@@ -4,6 +4,9 @@
 
 #include <gtest/gtest.h>
 #include "../DiskLayer/DiskManager.h"
+#include <iostream>
+#include <filesystem>
+#include <string>
 TEST(DmTest, DefaultConstructor) {
     DiskManager dm;
 }
