@@ -37,6 +37,17 @@ class LeafNode : public Node<T> {
             return std::find(keys_.begin(), keys_.end(), val) != keys_.end();
         }
 
+        std::string toString() {
+            std::string builder = "";
+            for(T& key : keys_) {
+                builder.append(std::to_string(key) + " ");
+            }
+            return builder;
+        }
+
+        std::vector<T> getList() {
+            return this->keys_;
+        }
     
 
 };

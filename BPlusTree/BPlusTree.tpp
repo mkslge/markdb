@@ -31,6 +31,23 @@ bool BPlusTree<T>::addHelper(Node<T>* node, const T& val) {
 
 template<typename T>
 void BPlusTree<T>::splitNode(Node<T>* node) {
+    std::vector<T> keys = node->getList();
+    int size = node->size();
+    std::vector<T> half1(keys.begin(), keys.begin() + size / 2);
+    std::vector<T> half2(keys.begin() + (size / 2), keys.begin() + size );
+    for(int elem : half1) {
+        std::cout << elem << " ";
+    }
+    std::cout << "\n";
+    for(int elem : half2) {
+        std::cout << elem << " ";
+    }
+
+    T new_split = half2[0];
+    
+
+
+
 
 }
 
@@ -63,3 +80,38 @@ bool BPlusTree<T>::containsHelper(Node<T>* node, const T& val) {
     InternalNode<T> *internal_node = static_cast<InternalNode<T>*>(node);
     return containsHelper(findChild(internal_node, val), val);
 }
+
+
+template<typename T>
+std::string BPlusTree<T>::toString() {
+    std::string builder = "";
+    std::queue<Node<T>*> q;
+    q.push(root_);
+    while(!q.empty()) {
+        size_t q_size = q.size();
+        for(size_t i{}; i < q_size;i++) {
+            Node<T>* curr_node = q.front();
+            q.pop();
+            builder.append(curr_node->toString());
+
+            if(!curr_node->isLeaf()) {
+                InternalNode<T>* curr_inode = static_cast<InternalNode<T>*>(curr_node);
+                for(size_t i{}; i < curr_inode->children_size();i++) {
+                    q.push(curr_inode->childAt(i));
+                }
+
+            }
+        }
+        builder.append("\n");
+    }
+
+    
+    return builder;
+}
+
+
+
+
+
+
+

@@ -5,6 +5,8 @@
 #include "InternalNode.h"
 #include "LeafNode.h"
 #include "Node.h"
+#include <queue>
+#include <vector>
 
 
 template <typename T>
@@ -23,6 +25,9 @@ class BPlusTree {
         bool add(const T& val);
         bool remove(const T& val);
         bool contains(const T& val);
+
+        std::string toString();
+        
 
 
     private:

@@ -41,8 +41,6 @@ class InternalNode : public Node<T> {
             return children_[index];
         }
 
-        
-
         bool isLeaf() {
             return false;
         }
@@ -54,6 +52,18 @@ class InternalNode : public Node<T> {
         size_t size() { return values_.size(); };
 
         size_t children_size() {return children_.size(); };
+
+        std::string toString() {
+            std::string builder = "";
+            for(T& value : values_) {
+                builder.append(std::to_string(value) + " ");
+            }
+            return builder;
+        }
+
+        std::vector<T> getList() {
+            return this->values_;
+        }
 
         
 
