@@ -13,7 +13,7 @@
 #include <iostream>
 #include "../Models/Page.h"
 
-inline std::string filepath = "/Users/markseeliger/CLionProjects/marksql/Storage/temp.db";
+
 //0644 is the file permissions that grants the owner read and write, and everyone else read only
 inline int filePermissionCode = 0666;
 
@@ -24,7 +24,6 @@ private:
     int fd_;
     int next_page_id_;
 public:
-    DiskManager();
     explicit DiskManager(std::string customFilepath);
     char* readPage(int page_id, char* buf);
     void writePage(int page_id, char* buf);

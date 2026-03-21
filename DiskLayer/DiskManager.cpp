@@ -7,9 +7,7 @@
 #include <utility>
 
 
-DiskManager::DiskManager() : DiskManager(filepath) {
 
-}
 
 
 

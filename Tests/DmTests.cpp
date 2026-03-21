@@ -16,10 +16,6 @@ std::filesystem::path make_test_db_path(const std::string& filename) {
 }
 }
 
-TEST(DmTest, DefaultConstructor) {
-    DiskManager dm;
-}
-
 TEST(DmTest, WriteAndRead) {
     const std::filesystem::path db_path = make_test_db_path("marksql_writeandread.db");
     std::filesystem::remove(db_path);
