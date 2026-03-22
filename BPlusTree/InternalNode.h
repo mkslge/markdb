@@ -119,6 +119,15 @@ class InternalNode : public Node<T> {
             return this->values_;
         }
 
+        int getIndex(const T& val) {
+            for(size_t i{}; i < values_.size();i++) {
+                if(val < values_[i]) {
+                    return i;
+                }
+            }
+            return values_.size() - 1;
+        }
+
         
 
 

@@ -30,6 +30,8 @@ class BPlusTree {
         bool remove(const T& val);
         bool contains(const T& val);
 
+        std::vector<T> getRange(const T& lo, const T& hi);
+
         std::string toString();
         
 

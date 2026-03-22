@@ -16,7 +16,7 @@ class LeafNode : public Node<T> {
         std::vector<T> keys_;
 
     public:
-        LeafNode() {};
+        LeafNode() : prev_(nullptr), next_(nullptr) {};
 
         int add(const T& val) {
             for(size_t i{}; i < keys_.size();i++) {
@@ -27,6 +27,21 @@ class LeafNode : public Node<T> {
             }
             keys_.push_back(val);
             return keys_.size() - 1;
+        }
+
+        LeafNode<T>* prev() {
+            return prev_;
+        }
+
+        LeafNode<T>* next() {
+            return next_;
+        }
+
+        void setPrev(LeafNode<T>* prev) {
+            prev_ = prev;
+        }
+        void setNext(LeafNode<T>* next) {
+            next_ = next;
         }
 
         T at(const int index) {
@@ -60,6 +75,15 @@ class LeafNode : public Node<T> {
 
         void setKeys(const std::vector<T>& keys) {
             keys_ = keys;
+        }
+
+        int getIndex(const T& val) {
+            for(size_t i{}; i < keys_.size();i++) {
+                if(val < keys_[i]) {
+                    return i;
+                }
+            }
+            return keys_.size() - 1;
         }
     
 

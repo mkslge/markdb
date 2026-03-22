@@ -1,5 +1,6 @@
 
 #include "BPlusTree.h"
+#include <functional>
 #include <memory>
 
 template<typename T>
@@ -40,6 +41,7 @@ void BPlusTree<T>::splitNode(Node<T>* node, std::vector<Node<T>*>& ancestors) {
     T separator_key{};
 
     if (node->isLeaf()) {
+        auto* old_leaf = static_cast<LeafNode<T>*>(node);
         std::vector<T> left_keys(keys.begin(), keys.begin() + static_cast<long>(split_index));
         std::vector<T> right_keys(keys.begin() + static_cast<long>(split_index), keys.end());
 
@@ -47,6 +49,23 @@ void BPlusTree<T>::splitNode(Node<T>* node, std::vector<Node<T>*>& ancestors) {
         auto right_leaf = std::make_unique<LeafNode<T>>();
         left_leaf->setKeys(left_keys);
         right_leaf->setKeys(right_keys);
+
+        LeafNode<T>* old_prev = old_leaf->prev();
+        LeafNode<T>* old_next = old_leaf->next();
+        LeafNode<T>* left_leaf_raw = left_leaf.get();
+        LeafNode<T>* right_leaf_raw = right_leaf.get();
+
+        left_leaf->setPrev(old_prev);
+        left_leaf->setNext(right_leaf_raw);
+        right_leaf->setPrev(left_leaf_raw);
+        right_leaf->setNext(old_next);
+
+        if (old_prev != nullptr) {
+            old_prev->setNext(left_leaf_raw);
+        }
+        if (old_next != nullptr) {
+            old_next->setPrev(right_leaf_raw);
+        }
 
         left_child = std::move(left_leaf);
         right_child = std::move(right_leaf);
@@ -165,6 +184,45 @@ std::string BPlusTree<T>::toString() {
     return builder;
 }
 
+template<typename T>
+std::vector<T> BPlusTree<T>::getRange(const T& lo, const T& hi) {
+    std::vector<T> keys_in_range{};
+    if (lo > hi) {
+        return keys_in_range;
+    }
 
+    //go down tree to where lo value would start
+    Node<T>* curr_node = root_.get();
+    while(curr_node != nullptr && !curr_node->isLeaf()) {
+        InternalNode<T>* curr_inode = static_cast<InternalNode<T>*>(curr_node);
+        int child_idx = curr_inode->getIndex(lo);
+        curr_node = curr_inode->childAt(child_idx);
+    }
 
+    //move backwards in case we end up at a value more than lo,
+    LeafNode<T> *curr_lnode = static_cast<LeafNode<T>*>(curr_node);
+    while (curr_lnode != nullptr && curr_lnode->prev() != nullptr) {
+        std::vector<T> prev_vals = curr_lnode->prev()->getList();
+        if (prev_vals.empty() || prev_vals.back() < lo) {
+            break;
+        }
+        curr_lnode = curr_lnode->prev();
+    }
 
+    //start using next ptrs to go forward and add everything :)
+    while(curr_lnode != nullptr) {
+        std::vector<T> vals = curr_lnode->getList();
+        for(T& curr : vals) {
+            if(curr >= lo && curr <= hi) {
+                keys_in_range.push_back(curr);
+            }
+            if (curr > hi) {
+                return keys_in_range;
+            }
+        }
+        curr_lnode = curr_lnode->next();
+    }
+    
+
+    return keys_in_range;
+}
