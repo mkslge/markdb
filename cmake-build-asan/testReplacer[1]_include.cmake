@@ -1,5 +1,0 @@
-if(EXISTS "/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testReplacer[1]_tests.cmake")
-  include("/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testReplacer[1]_tests.cmake")
-else()
-  add_test(testReplacer_NOT_BUILT testReplacer_NOT_BUILT)
-endif()

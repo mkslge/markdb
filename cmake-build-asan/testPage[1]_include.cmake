@@ -1,5 +1,0 @@
-if(EXISTS "/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testPage[1]_tests.cmake")
-  include("/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testPage[1]_tests.cmake")
-else()
-  add_test(testPage_NOT_BUILT testPage_NOT_BUILT)
-endif()
