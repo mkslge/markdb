@@ -114,3 +114,44 @@ TEST(BPlusTreeTests, SplitPromotesExpectedSeparatorsForOrderFourTree) {
     EXPECT_TRUE(tree.contains(5));
     EXPECT_TRUE(tree.contains(7));
 }
+
+TEST(BPlusTreeTests, GetRangeFromEmptyTreeReturnsEmptyVector) {
+    BPlusTree<int> tree(3);
+
+    EXPECT_EQ(tree.getRange(1, 5), std::vector<int>{});
+}
+
+TEST(BPlusTreeTests, GetRangeReturnsExactBoundaryMatches) {
+    BPlusTree<int> tree(4);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6});
+
+    EXPECT_EQ(tree.getRange(2, 5), (std::vector<int>{2, 3, 4, 5}));
+}
+
+TEST(BPlusTreeTests, GetRangeReturnsOnlyInteriorValuesAcrossSplits) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_EQ(tree.getRange(3, 6), (std::vector<int>{3, 4, 5, 6}));
+}
+
+TEST(BPlusTreeTests, GetRangeReturnsWholeTreeWhenBoundsCoverAllValues) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_EQ(tree.getRange(-10, 99), (std::vector<int>{1, 2, 3, 4, 5, 6, 7, 8}));
+}
+
+TEST(BPlusTreeTests, GetRangeReturnsEmptyWhenNoKeysFallInsideBounds) {
+    BPlusTree<int> tree(4);
+    InsertAll(tree, {10, 20, 30, 40});
+
+    EXPECT_EQ(tree.getRange(21, 29), std::vector<int>{});
+}
+
+TEST(BPlusTreeTests, GetRangePreservesDuplicatesWithinBounds) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 2, 2, 3, 4, 5});
+
+    EXPECT_EQ(tree.getRange(2, 3), (std::vector<int>{2, 2, 2, 3}));
+}

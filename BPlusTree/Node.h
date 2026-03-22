@@ -20,6 +20,7 @@ class Node {
         virtual bool contains(const T& val) = 0;
         virtual std::string toString() = 0;
         virtual std::vector<T> getList() = 0;
+        virtual int getIndex(const T& val) = 0;
 };
 
 #endif // NODE_H
