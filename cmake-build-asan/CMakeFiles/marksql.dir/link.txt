@@ -1,0 +1,1 @@
+/usr/bin/c++ -fsanitize=address -fno-omit-frame-pointer -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -fsanitize=address -fsanitize=address,undefined CMakeFiles/marksql.dir/main.cpp.o CMakeFiles/marksql.dir/RecordLayer/HeapPage.cpp.o CMakeFiles/marksql.dir/Models/Tuple.cpp.o CMakeFiles/marksql.dir/TableLayer/TableHeap.cpp.o -o marksql  libmarksql_lib.a

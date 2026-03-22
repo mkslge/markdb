@@ -16,7 +16,7 @@ class LeafNode : public Node<T> {
         std::vector<T> keys_;
 
     public:
-        LeafNode() {};
+        LeafNode<T>() {};
 
         int add(const T& val) {
             for(size_t i{}; i < keys_.size();i++) {

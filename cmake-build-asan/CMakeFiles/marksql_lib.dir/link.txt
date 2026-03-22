@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmarksql_lib.a CMakeFiles/marksql_lib.dir/Models/Page.cpp.o CMakeFiles/marksql_lib.dir/DiskLayer/DiskManager.cpp.o CMakeFiles/marksql_lib.dir/MemoryManagementLayer/BufferPoolManager.cpp.o CMakeFiles/marksql_lib.dir/MemoryManagementLayer/Replacer/LRUReplacer.cpp.o CMakeFiles/marksql_lib.dir/RecordLayer/HeapPage.cpp.o CMakeFiles/marksql_lib.dir/TableLayer/TableHeap.cpp.o
+/usr/bin/ranlib libmarksql_lib.a

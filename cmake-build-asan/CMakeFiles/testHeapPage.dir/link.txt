@@ -1,0 +1,1 @@
+/usr/bin/c++ -fsanitize=address -fno-omit-frame-pointer -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -fsanitize=address -fsanitize=address,undefined CMakeFiles/testHeapPage.dir/Tests/HeapPageTests.cpp.o -o testHeapPage  libmarksql_lib.a lib/libgtest_main.a lib/libgtest.a

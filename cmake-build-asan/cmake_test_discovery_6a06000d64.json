@@ -1,0 +1,22 @@
+{
+  "tests": 2,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "DmTest",
+      "tests": 2,
+      "testsuite": [
+        {
+          "name": "WriteAndRead",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/DmTests.cpp",
+          "line": 19
+        },
+        {
+          "name": "AllocatePage",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/DmTests.cpp",
+          "line": 38
+        }
+      ]
+    }
+  ]
+}

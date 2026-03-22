@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testBPlusTree[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testBPlusTree[1]_tests.cmake")
+else()
+  add_test(testBPlusTree_NOT_BUILT testBPlusTree_NOT_BUILT)
+endif()

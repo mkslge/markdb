@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testDM[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testDM[1]_tests.cmake")
+else()
+  add_test(testDM_NOT_BUILT testDM_NOT_BUILT)
+endif()

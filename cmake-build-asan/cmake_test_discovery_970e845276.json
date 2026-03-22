@@ -1,0 +1,47 @@
+{
+  "tests": 7,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "BufferPoolManagerTest",
+      "tests": 7,
+      "testsuite": [
+        {
+          "name": "FetchPageFromDisk",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 9
+        },
+        {
+          "name": "FetchSamePageTwice",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 26
+        },
+        {
+          "name": "CannotEvictPinned",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 37
+        },
+        {
+          "name": "UnpinAllowsEviction",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 51
+        },
+        {
+          "name": "DirtyWriteBack",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 67
+        },
+        {
+          "name": "LRUEvictionOrder",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 93
+        },
+        {
+          "name": "DataPersistsAfterEviction",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BpmTests.cpp",
+          "line": 113
+        }
+      ]
+    }
+  ]
+}

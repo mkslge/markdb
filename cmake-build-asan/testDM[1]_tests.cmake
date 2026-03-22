@@ -1,0 +1,5 @@
+add_test([=[DmTest.WriteAndRead]=]  /Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testDM [==[--gtest_filter=DmTest.WriteAndRead]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[DmTest.WriteAndRead]=]  PROPERTIES DEF_SOURCE_LINE /Users/markseeliger/CLionProjects/marksql/Tests/DmTests.cpp:19 WORKING_DIRECTORY /Users/markseeliger/CLionProjects/marksql/cmake-build-asan SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[DmTest.AllocatePage]=]  /Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testDM [==[--gtest_filter=DmTest.AllocatePage]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[DmTest.AllocatePage]=]  PROPERTIES DEF_SOURCE_LINE /Users/markseeliger/CLionProjects/marksql/Tests/DmTests.cpp:38 WORKING_DIRECTORY /Users/markseeliger/CLionProjects/marksql/cmake-build-asan SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  testDM_TESTS DmTest.WriteAndRead DmTest.AllocatePage)

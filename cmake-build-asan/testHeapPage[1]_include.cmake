@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testHeapPage[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/cmake-build-asan/testHeapPage[1]_tests.cmake")
+else()
+  add_test(testHeapPage_NOT_BUILT testHeapPage_NOT_BUILT)
+endif()

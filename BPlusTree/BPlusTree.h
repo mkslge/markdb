@@ -7,20 +7,24 @@
 #include "Node.h"
 #include <queue>
 #include <vector>
+#include <memory>
 
 
 template <typename T>
 class BPlusTree {
     private:
 
-    Node<T>* root_;
+    std::unique_ptr<Node<T>> root_;
     int order_;
 
 
     public:
         BPlusTree(int order) : order_(order) {
-            root_ = new LeafNode<T>();
+            root_ = std::make_unique<LeafNode<T>>();
         }
+
+
+        
 
         bool add(const T& val);
         bool remove(const T& val);
