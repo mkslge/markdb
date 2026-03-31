@@ -155,3 +155,128 @@ TEST(BPlusTreeTests, GetRangePreservesDuplicatesWithinBounds) {
 
     EXPECT_EQ(tree.getRange(2, 3), (std::vector<int>{2, 2, 2, 3}));
 }
+
+TEST(BPlusTreeTests, RemoveMissingValuePreservesExactSingleLeafShape) {
+    BPlusTree<int> tree(5);
+    InsertAll(tree, {1, 2, 3, 4});
+
+    EXPECT_FALSE(tree.remove(9));
+    EXPECT_EQ(tree.toString(), "1 2 3 4 \n");
+}
+
+TEST(BPlusTreeTests, RemoveMiddleValueFromSingleLeafUpdatesExactLeafShape) {
+    BPlusTree<int> tree(5);
+    InsertAll(tree, {1, 2, 3, 4});
+
+    EXPECT_TRUE(tree.remove(3));
+    EXPECT_EQ(tree.toString(), "1 2 4 \n");
+}
+
+TEST(BPlusTreeTests, RemoveOnlyValueCollapsesToExactEmptyTreeShape) {
+    BPlusTree<int> tree(5);
+    InsertAll(tree, {42});
+
+    EXPECT_TRUE(tree.remove(42));
+    EXPECT_EQ(tree.toString(), "\n");
+}
+
+TEST(BPlusTreeTests, RemoveOneDuplicateUpdatesExactLeafMultiplicity) {
+    BPlusTree<int> tree(5);
+    InsertAll(tree, {2, 2, 2, 3});
+
+    EXPECT_TRUE(tree.remove(2));
+    EXPECT_EQ(tree.toString(), "2 2 3 \n");
+}
+
+TEST(BPlusTreeTests, RemoveSeparatorKeyUpdatesRootSeparatorExactly) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3});
+
+    EXPECT_TRUE(tree.remove(2));
+    EXPECT_EQ(tree.toString(), "3 \n1 3 \n");
+}
+
+TEST(BPlusTreeTests, RemoveThenMergeAndCollapseRootProducesSingleLeafShape) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3});
+
+    EXPECT_TRUE(tree.remove(2));
+    EXPECT_TRUE(tree.remove(1));
+    EXPECT_EQ(tree.toString(), "3 \n");
+}
+
+TEST(BPlusTreeTests, RemoveFromLeftEdgeWithoutUnderflowPreservesOrderFourSeparators) {
+    BPlusTree<int> tree(4);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_TRUE(tree.remove(1));
+    EXPECT_EQ(tree.toString(), "3 5 7 \n2 3 4 5 6 7 8 \n");
+}
+
+TEST(BPlusTreeTests, RemoveRightBoundaryValueWithoutUnderflowPreservesOrderFourSeparators) {
+    BPlusTree<int> tree(4);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_TRUE(tree.remove(8));
+    EXPECT_EQ(tree.toString(), "3 5 7 \n1 2 3 4 5 6 7 \n");
+}
+
+TEST(BPlusTreeTests, RemoveLeafFirstKeyUpdatesParentSeparatorExactly) {
+    BPlusTree<int> tree(4);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_TRUE(tree.remove(3));
+    EXPECT_EQ(tree.toString(), "4 5 7 \n1 2 4 5 6 7 8 \n");
+}
+
+TEST(BPlusTreeTests, RemoveValueFromMiddleLeafWithoutUnderflowKeepsExactUpperStructure) {
+    BPlusTree<int> tree(4);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_TRUE(tree.remove(4));
+    EXPECT_EQ(tree.toString(), "3 5 7 \n1 2 3 5 6 7 8 \n");
+}
+
+TEST(BPlusTreeTests, RemoveRightmostValueFromOrderThreeTreeKeepsExactInternalShapeWhenNoUnderflow) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7});
+
+    EXPECT_TRUE(tree.remove(7));
+    EXPECT_EQ(tree.toString(), "3 5 \n2 4 6 \n1 2 3 4 5 6 \n");
+}
+
+TEST(BPlusTreeTests, RemoveLeftmostValueCanForceMergeIntoSmallerRootShape) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4});
+
+    EXPECT_TRUE(tree.remove(1));
+    EXPECT_EQ(tree.toString(), "3 \n2 3 4 \n");
+}
+
+TEST(BPlusTreeTests, RemoveSeriesThatShouldCollapseMultiLevelTreeToSingleLeaf) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4});
+
+    EXPECT_TRUE(tree.remove(1));
+    EXPECT_TRUE(tree.remove(2));
+    EXPECT_TRUE(tree.remove(3));
+    EXPECT_EQ(tree.toString(), "4 \n");
+}
+
+TEST(BPlusTreeTests, RemoveInteriorValueFromDeepTreeMustUpdateExactLeafLine) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_TRUE(tree.remove(5));
+    EXPECT_EQ(tree.toString(), "3 6 \n2 4 7 \n1 2 3 4 6 7 8 \n");
+}
+
+TEST(BPlusTreeTests, RemoveMultipleValuesAcrossLeavesMustProduceExactRemainingShape) {
+    BPlusTree<int> tree(3);
+    InsertAll(tree, {1, 2, 3, 4, 5, 6, 7, 8});
+
+    EXPECT_TRUE(tree.remove(2));
+    EXPECT_TRUE(tree.remove(4));
+    EXPECT_TRUE(tree.remove(7));
+    EXPECT_EQ(tree.toString(), "5 \n3 6 8 \n1 3 5 6 8 \n");
+}
