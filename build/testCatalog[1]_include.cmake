@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testCatalog[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/build/testCatalog[1]_tests.cmake")
+else()
+  add_test(testCatalog_NOT_BUILT testCatalog_NOT_BUILT)
+endif()

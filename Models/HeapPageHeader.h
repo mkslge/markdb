@@ -7,14 +7,14 @@
 
 #include <cstdint>
 
-
-
-#pragma pack(1)
+#pragma pack(push, 1)
 
 struct HeapPageHeader {
     std::uint32_t num_slots;
     std::uint32_t free_space_start;
     std::uint32_t free_space_end;
 };
+
+#pragma pack(pop)
 
 #endif //HEAPPAGEHEADER_H

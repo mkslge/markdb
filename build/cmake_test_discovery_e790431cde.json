@@ -1,0 +1,83 @@
+{
+  "tests": 13,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "SchemaTests",
+      "tests": 3,
+      "testsuite": [
+        {
+          "name": "SchemaPreservesColumnOrderAndSupportsNameLookup",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 15
+        },
+        {
+          "name": "GetColumnThrowsWhenIndexIsOutOfRange",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 33
+        },
+        {
+          "name": "EmptySchemaReportsNoColumns",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 41
+        }
+      ]
+    },
+    {
+      "name": "CatalogTest",
+      "tests": 10,
+      "testsuite": [
+        {
+          "name": "CreateTableStoresSchemaAndAllocatesTableHeap",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 49
+        },
+        {
+          "name": "DuplicateTableNameIsRejected",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 68
+        },
+        {
+          "name": "DuplicateColumnNamesAreRejected",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 76
+        },
+        {
+          "name": "EmptyTableNameIsRejected",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 87
+        },
+        {
+          "name": "EmptySchemaIsRejected",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 93
+        },
+        {
+          "name": "EmptyColumnNameIsRejected",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 100
+        },
+        {
+          "name": "GetTableReturnsNullptrWhenTableDoesNotExist",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 111
+        },
+        {
+          "name": "HasTableReturnsFalseWhenTableDoesNotExist",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 117
+        },
+        {
+          "name": "ListTablesReturnsCreatedTableNames",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 123
+        },
+        {
+          "name": "ListTablesStartsEmpty",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/CatalogTests.cpp",
+          "line": 136
+        }
+      ]
+    }
+  ]
+}

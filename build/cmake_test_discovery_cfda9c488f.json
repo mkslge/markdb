@@ -1,0 +1,113 @@
+{
+  "tests": 19,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "BinderTest",
+      "tests": 18,
+      "testsuite": [
+        {
+          "name": "BindTableColumnsResolvesNamedColumnsInRequestedOrder",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 27
+        },
+        {
+          "name": "BindSelectResolvesNamedColumnsFromAst",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 40
+        },
+        {
+          "name": "BindSelectExpandsWildcardFromAst",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 58
+        },
+        {
+          "name": "BindInsertAcceptsValuesMatchingSchemaColumnCount",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 70
+        },
+        {
+          "name": "BoundColumnsPointIntoResolvedTableSchema",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 80
+        },
+        {
+          "name": "BindTableColumnsExpandsWildcardToWholeSchema",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 89
+        },
+        {
+          "name": "BindTableColumnsTreatsEmptyColumnListAsWildcard",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 99
+        },
+        {
+          "name": "BindTableColumnsRejectsUnknownTable",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 106
+        },
+        {
+          "name": "BindSelectRejectsUnknownTableFromAst",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 112
+        },
+        {
+          "name": "BindInsertRejectsUnknownTableFromAst",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 118
+        },
+        {
+          "name": "BindTableColumnsRejectsUnknownColumn",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 124
+        },
+        {
+          "name": "BindTableColumnsRejectsEmptyTableName",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 130
+        },
+        {
+          "name": "BindTableColumnsRejectsEmptyColumnName",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 136
+        },
+        {
+          "name": "BindInsertRejectsWrongValueCountForSchema",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 142
+        },
+        {
+          "name": "BindTableColumnsRejectsMixedWildcardAndNamedColumns",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 150
+        },
+        {
+          "name": "BindTableColumnsRejectsWildcardWhenItIsNotTheOnlyProjection",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 156
+        },
+        {
+          "name": "BindSelectRejectsWildcardWhenItIsNotTheOnlyProjection",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 162
+        },
+        {
+          "name": "BindTableColumnsAllowsDuplicateProjectedColumns",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "name": "BinderEdgeCaseTests",
+      "tests": 1,
+      "testsuite": [
+        {
+          "name": "NullCatalogBinderRejectsAllBindings",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BinderTests.cpp",
+          "line": 180
+        }
+      ]
+    }
+  ]
+}

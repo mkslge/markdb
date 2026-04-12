@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/build/testTableHeap[1]_tests.cmake")
+else()
+  add_test(testTableHeap_NOT_BUILT testTableHeap_NOT_BUILT)
+endif()

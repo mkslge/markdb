@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testTokenizer[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/build/testTokenizer[1]_tests.cmake")
+else()
+  add_test(testTokenizer_NOT_BUILT testTokenizer_NOT_BUILT)
+endif()

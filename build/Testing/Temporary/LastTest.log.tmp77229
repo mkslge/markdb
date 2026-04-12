@@ -1,0 +1,164 @@
+Start testing: Apr 12 16:48 EDT
+----------------------------------------------------------
+33/74 Testing: TableHeapTest.ConstructorCreatesUsableTableHeap
+33/74 Test: TableHeapTest.ConstructorCreatesUsableTableHeap
+Command: "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap" "--gtest_filter=TableHeapTest.ConstructorCreatesUsableTableHeap" "--gtest_also_run_disabled_tests"
+Directory: /Users/markseeliger/CLionProjects/marksql/build
+"TableHeapTest.ConstructorCreatesUsableTableHeap" start time: Apr 12 16:48 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/markseeliger/CLionProjects/marksql/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = TableHeapTest.ConstructorCreatesUsableTableHeap
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TableHeapTest
+[ RUN      ] TableHeapTest.ConstructorCreatesUsableTableHeap
+[       OK ] TableHeapTest.ConstructorCreatesUsableTableHeap (1 ms)
+[----------] 1 test from TableHeapTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"TableHeapTest.ConstructorCreatesUsableTableHeap" end time: Apr 12 16:48 EDT
+"TableHeapTest.ConstructorCreatesUsableTableHeap" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/74 Testing: TableHeapTest.InsertTupleReturnsValidRid
+34/74 Test: TableHeapTest.InsertTupleReturnsValidRid
+Command: "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap" "--gtest_filter=TableHeapTest.InsertTupleReturnsValidRid" "--gtest_also_run_disabled_tests"
+Directory: /Users/markseeliger/CLionProjects/marksql/build
+"TableHeapTest.InsertTupleReturnsValidRid" start time: Apr 12 16:48 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/markseeliger/CLionProjects/marksql/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = TableHeapTest.InsertTupleReturnsValidRid
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TableHeapTest
+[ RUN      ] TableHeapTest.InsertTupleReturnsValidRid
+[       OK ] TableHeapTest.InsertTupleReturnsValidRid (1 ms)
+[----------] 1 test from TableHeapTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"TableHeapTest.InsertTupleReturnsValidRid" end time: Apr 12 16:48 EDT
+"TableHeapTest.InsertTupleReturnsValidRid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+35/74 Testing: TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage
+35/74 Test: TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage
+Command: "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap" "--gtest_filter=TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage" "--gtest_also_run_disabled_tests"
+Directory: /Users/markseeliger/CLionProjects/marksql/build
+"TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage" start time: Apr 12 16:48 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/markseeliger/CLionProjects/marksql/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TableHeapTest
+[ RUN      ] TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage
+[       OK ] TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage (5 ms)
+[----------] 1 test from TableHeapTest (5 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (5 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage" end time: Apr 12 16:48 EDT
+"TableHeapTest.InsertedTupleCanBeReadBackFromHeapPage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+36/74 Testing: TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes
+36/74 Test: TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes
+Command: "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap" "--gtest_filter=TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes" "--gtest_also_run_disabled_tests"
+Directory: /Users/markseeliger/CLionProjects/marksql/build
+"TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes" start time: Apr 12 16:48 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/markseeliger/CLionProjects/marksql/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TableHeapTest
+[ RUN      ] TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes
+[       OK ] TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes (3 ms)
+[----------] 1 test from TableHeapTest (3 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (3 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes" end time: Apr 12 16:48 EDT
+"TableHeapTest.RepeatedMixedSizeInsertsPreserveRidOrderingAndTupleBytes" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/74 Testing: TableHeapTest.GetTupleReadsBackInsertedTupleByRid
+37/74 Test: TableHeapTest.GetTupleReadsBackInsertedTupleByRid
+Command: "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap" "--gtest_filter=TableHeapTest.GetTupleReadsBackInsertedTupleByRid" "--gtest_also_run_disabled_tests"
+Directory: /Users/markseeliger/CLionProjects/marksql/build
+"TableHeapTest.GetTupleReadsBackInsertedTupleByRid" start time: Apr 12 16:48 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/markseeliger/CLionProjects/marksql/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = TableHeapTest.GetTupleReadsBackInsertedTupleByRid
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TableHeapTest
+[ RUN      ] TableHeapTest.GetTupleReadsBackInsertedTupleByRid
+[       OK ] TableHeapTest.GetTupleReadsBackInsertedTupleByRid (1 ms)
+[----------] 1 test from TableHeapTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"TableHeapTest.GetTupleReadsBackInsertedTupleByRid" end time: Apr 12 16:48 EDT
+"TableHeapTest.GetTupleReadsBackInsertedTupleByRid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/74 Testing: TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid
+38/74 Test: TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid
+Command: "/Users/markseeliger/CLionProjects/marksql/build/testTableHeap" "--gtest_filter=TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid" "--gtest_also_run_disabled_tests"
+Directory: /Users/markseeliger/CLionProjects/marksql/build
+"TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid" start time: Apr 12 16:48 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/markseeliger/CLionProjects/marksql/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TableHeapTest
+[ RUN      ] TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid
+[       OK ] TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid (2 ms)
+[----------] 1 test from TableHeapTest (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (2 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid" end time: Apr 12 16:48 EDT
+"TableHeapTest.ApplyDeleteMakesTupleEmptyAtExistingRid" time elapsed: 00:00:00
+----------------------------------------------------------
+

@@ -1,0 +1,5 @@
+if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testBPM[1]_tests.cmake")
+  include("/Users/markseeliger/CLionProjects/marksql/build/testBPM[1]_tests.cmake")
+else()
+  add_test(testBPM_NOT_BUILT testBPM_NOT_BUILT)
+endif()

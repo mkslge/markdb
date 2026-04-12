@@ -35,6 +35,27 @@ target_link_options(sanitizers INTERFACE
 # DBMS IMPLEMENTATION LIBRARY
 # ---------------------------
 add_library(marksql_lib
+        BinderLayer/BoundInsertStatement.cpp
+        BinderLayer/BoundColumnRef.cpp
+        BinderLayer/BoundTableStatement.cpp
+        BinderLayer/Binder.cpp
+        CatalogLayer/Column.cpp
+        CatalogLayer/Schema.cpp
+        CatalogLayer/TableInfo.cpp
+        CatalogLayer/Catalog.cpp
+        ExecutionLayer/InsertExecutor.cpp
+        ExecutionLayer/MaterializedRow.cpp
+        ExecutionLayer/ResultRow.cpp
+        ExecutionLayer/RowCodec.cpp
+        ExecutionLayer/SelectExecutor.cpp
+        SyntaxLayer/ColumnExpression.cpp
+        SyntaxLayer/InsertStatement.cpp
+        SyntaxLayer/InsertParseResult.cpp
+        SyntaxLayer/SelectStatement.cpp
+        SyntaxLayer/ParseResult.cpp
+        SyntaxLayer/Parser.cpp
+        SyntaxLayer/Token.cpp
+        SyntaxLayer/Tokenizer.cpp
         Models/Page.cpp
         DiskLayer/DiskManager.cpp
         MemoryManagementLayer/BufferPoolManager.cpp
@@ -86,6 +107,30 @@ add_executable(testTableHeap)
 target_sources(testTableHeap PRIVATE Tests/TableHeapTests.cpp)
 target_link_libraries(testTableHeap PRIVATE marksql_lib GTest::gtest_main)
 
+add_executable(testCatalog)
+target_sources(testCatalog PRIVATE Tests/CatalogTests.cpp)
+target_link_libraries(testCatalog PRIVATE marksql_lib GTest::gtest_main)
+
+add_executable(testBinder)
+target_sources(testBinder PRIVATE Tests/BinderTests.cpp)
+target_link_libraries(testBinder PRIVATE marksql_lib GTest::gtest_main)
+
+add_executable(testSyntax)
+target_sources(testSyntax PRIVATE Tests/SyntaxTests.cpp)
+target_link_libraries(testSyntax PRIVATE marksql_lib GTest::gtest_main)
+
+add_executable(testTokenizer)
+target_sources(testTokenizer PRIVATE Tests/TokenizerTests.cpp)
+target_link_libraries(testTokenizer PRIVATE marksql_lib GTest::gtest_main)
+
+add_executable(testParser)
+target_sources(testParser PRIVATE Tests/ParserTests.cpp)
+target_link_libraries(testParser PRIVATE marksql_lib GTest::gtest_main)
+
+add_executable(testExecutor)
+target_sources(testExecutor PRIVATE Tests/ExecutorTests.cpp)
+target_link_libraries(testExecutor PRIVATE marksql_lib GTest::gtest_main)
+
 
 add_executable(testBPlusTree)
 target_sources(testBPlusTree PRIVATE Tests/BPlusTreeTests.cpp BPlusTree/BPlusTree.tpp)
@@ -100,4 +145,11 @@ gtest_discover_tests(testPage)
 gtest_discover_tests(testReplacer)
 gtest_discover_tests(testBPM)
 gtest_discover_tests(testHeapPage)
+gtest_discover_tests(testTableHeap)
+gtest_discover_tests(testCatalog)
+gtest_discover_tests(testBinder)
+gtest_discover_tests(testSyntax)
+gtest_discover_tests(testTokenizer)
+gtest_discover_tests(testParser)
+gtest_discover_tests(testExecutor)
 gtest_discover_tests(testBPlusTree)

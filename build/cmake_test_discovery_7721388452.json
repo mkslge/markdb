@@ -1,0 +1,72 @@
+{
+  "tests": 12,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "TokenizerTests",
+      "tests": 12,
+      "testsuite": [
+        {
+          "name": "TokenizeSelectStarFromTableStatement",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 21
+        },
+        {
+          "name": "TokenizeCommaSeparatedProjectionList",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 37
+        },
+        {
+          "name": "TokenizeKeywordsCaseInsensitivelyButPreserveIdentifierLexemes",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 56
+        },
+        {
+          "name": "TokenizeAcceptsUnderscoresAndDigitsInsideIdentifiers",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 69
+        },
+        {
+          "name": "TokenizeHandlesWhitespaceAndNewlines",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 80
+        },
+        {
+          "name": "TokenizeEmptyInputReturnsEmptyTokenStream",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 97
+        },
+        {
+          "name": "TokenizeRejectsUnknownSymbols",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 106
+        },
+        {
+          "name": "TokenizeSupportsIntegerLiteralsForInsertValues",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 114
+        },
+        {
+          "name": "TokenizeRejectsIdentifiersStartingWithDash",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 131
+        },
+        {
+          "name": "TokenizeTreatsKeywordPrefixInsideIdentifierAsIdentifier",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 137
+        },
+        {
+          "name": "TokenizeInsertStringLiteralsWithoutQuotesInLexeme",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 149
+        },
+        {
+          "name": "TokenizeRejectsUnterminatedStringLiteral",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/TokenizerTests.cpp",
+          "line": 162
+        }
+      ]
+    }
+  ]
+}

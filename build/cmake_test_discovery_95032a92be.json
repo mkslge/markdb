@@ -1,0 +1,162 @@
+{
+  "tests": 30,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "BPlusTreeTests",
+      "tests": 30,
+      "testsuite": [
+        {
+          "name": "EmptyTreeDoesNotContainValues",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 15
+        },
+        {
+          "name": "InsertWithoutSplitKeepsLeafSorted",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 24
+        },
+        {
+          "name": "RootLeafSplitProducesExpectedTwoLevelShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 36
+        },
+        {
+          "name": "ContainsFindsSeparatorValuesAfterRootSplit",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 48
+        },
+        {
+          "name": "SequentialInsertsCauseCascadingSplits",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 60
+        },
+        {
+          "name": "ContainsWorksAcrossAllLeafRangesAfterMultipleSplits",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 72
+        },
+        {
+          "name": "MixedInsertionOrderStillBuildsOrderedLeaves",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 86
+        },
+        {
+          "name": "DuplicateKeysAreRetainedAndSearchable",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 98
+        },
+        {
+          "name": "SplitPromotesExpectedSeparatorsForOrderFourTree",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 108
+        },
+        {
+          "name": "GetRangeFromEmptyTreeReturnsEmptyVector",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 118
+        },
+        {
+          "name": "GetRangeReturnsExactBoundaryMatches",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 124
+        },
+        {
+          "name": "GetRangeReturnsOnlyInteriorValuesAcrossSplits",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 131
+        },
+        {
+          "name": "GetRangeReturnsWholeTreeWhenBoundsCoverAllValues",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 138
+        },
+        {
+          "name": "GetRangeReturnsEmptyWhenNoKeysFallInsideBounds",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 145
+        },
+        {
+          "name": "GetRangePreservesDuplicatesWithinBounds",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 152
+        },
+        {
+          "name": "RemoveMissingValuePreservesExactSingleLeafShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 159
+        },
+        {
+          "name": "RemoveMiddleValueFromSingleLeafUpdatesExactLeafShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 167
+        },
+        {
+          "name": "RemoveOnlyValueCollapsesToExactEmptyTreeShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 175
+        },
+        {
+          "name": "RemoveOneDuplicateUpdatesExactLeafMultiplicity",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 183
+        },
+        {
+          "name": "RemoveSeparatorKeyUpdatesRootSeparatorExactly",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 191
+        },
+        {
+          "name": "RemoveThenMergeAndCollapseRootProducesSingleLeafShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 199
+        },
+        {
+          "name": "RemoveFromLeftEdgeWithoutUnderflowPreservesOrderFourSeparators",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 208
+        },
+        {
+          "name": "RemoveRightBoundaryValueWithoutUnderflowPreservesOrderFourSeparators",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 216
+        },
+        {
+          "name": "RemoveLeafFirstKeyUpdatesParentSeparatorExactly",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 224
+        },
+        {
+          "name": "RemoveValueFromMiddleLeafWithoutUnderflowKeepsExactUpperStructure",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 232
+        },
+        {
+          "name": "RemoveRightmostValueFromOrderThreeTreeKeepsExactInternalShapeWhenNoUnderflow",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 240
+        },
+        {
+          "name": "RemoveLeftmostValueCanForceMergeIntoSmallerRootShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 248
+        },
+        {
+          "name": "RemoveSeriesThatShouldCollapseMultiLevelTreeToSingleLeaf",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 256
+        },
+        {
+          "name": "RemoveInteriorValueFromDeepTreeMustUpdateExactLeafLine",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 266
+        },
+        {
+          "name": "RemoveMultipleValuesAcrossLeavesMustProduceExactRemainingShape",
+          "file": "\/Users\/markseeliger\/CLionProjects\/marksql\/Tests\/BPlusTreeTests.cpp",
+          "line": 274
+        }
+      ]
+    }
+  ]
+}

@@ -8,6 +8,7 @@
 #include "../RecordLayer/HeapPage.h"
 #include "MemoryManagementLayer/BufferPoolManager.h"
 #include "../Models/RID.h"
+#include <vector>
 class TableHeap {
 private:
     DiskManager* dm_;
@@ -15,9 +16,12 @@ private:
     int first_page_id_;
 public:
     TableHeap(DiskManager* dm, BufferPoolManager* bpm);
+    TableHeap(DiskManager* dm, BufferPoolManager* bpm, int first_page_id);
 
     RID insertTuple(Tuple& to_insert);
     bool getTuple(const RID& rid, Tuple& out);
+    std::vector<Tuple> scanTuples();
+    int getFirstPageId() const;
 
     bool applyDelete(const RID& rid);
 

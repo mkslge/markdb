@@ -114,10 +114,9 @@ Page* BufferPoolManager::newPage(int page_id) {
         unused_frames_.pop_front();
     }
 
-    int new_page_id = static_cast<size_t>(dm_->allocatePage());
-    frame_table_[new_page_id] = new_frame_id;
+    frame_table_[page_id] = new_frame_id;
     frames_[new_frame_id] = Page();
-    frames_[new_frame_id].set_page_id(new_page_id);
+    frames_[new_frame_id].set_page_id(page_id);
     frames_[new_frame_id].set_dirty(true);
     frames_[new_frame_id].set_pin_count(1);
     return &frames_[new_frame_id];
@@ -150,7 +149,6 @@ bool BufferPoolManager::deletePage(int page_id) {
     unused_frames_.push_front(frame_id);
     return true;
 }
-
 
 
 
