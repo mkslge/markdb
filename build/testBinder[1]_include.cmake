@@ -1,5 +1,0 @@
-if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testBinder[1]_tests.cmake")
-  include("/Users/markseeliger/CLionProjects/marksql/build/testBinder[1]_tests.cmake")
-else()
-  add_test(testBinder_NOT_BUILT testBinder_NOT_BUILT)
-endif()

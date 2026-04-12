@@ -1,5 +1,0 @@
-if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testExecutor[1]_tests.cmake")
-  include("/Users/markseeliger/CLionProjects/marksql/build/testExecutor[1]_tests.cmake")
-else()
-  add_test(testExecutor_NOT_BUILT testExecutor_NOT_BUILT)
-endif()

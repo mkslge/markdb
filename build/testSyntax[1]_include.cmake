@@ -1,5 +1,0 @@
-if(EXISTS "/Users/markseeliger/CLionProjects/marksql/build/testSyntax[1]_tests.cmake")
-  include("/Users/markseeliger/CLionProjects/marksql/build/testSyntax[1]_tests.cmake")
-else()
-  add_test(testSyntax_NOT_BUILT testSyntax_NOT_BUILT)
-endif()
